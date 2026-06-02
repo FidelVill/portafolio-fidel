@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "about": "Sobre mí",
+    "experience": "Experiencia",
+    "projects": "Proyectos",
+    "skills": "Habilidades",
+    "contact": "Contacto",
+    "download_cv": "Descargar CV"
+  },
+  "hero": {
+    "greeting": "Hola, soy",
+    "title": "Fullstack Developer",
+    "subtitle": "Web · Móvil · IA",
+    "description": "Desarrollador especializado en crear aplicaciones web y móviles de alto rendimiento, con experiencia en integración de IA y más de 11 despliegues en producción.",
+    "cta_projects": "Ver proyectos",
+    "cta_contact": "Contáctame",
+    "open_to_work": "Disponible para trabajar"
+  },
+  "about": {
+    "title": "Sobre mí",
+    "description1": "Soy Ingeniero en Sistemas Computacionales con especialidad en Desarrollo de Software, apasionado por construir soluciones digitales que generan impacto real.",
+    "description2": "Con más de 2 años de experiencia en proyectos reales, he trabajado en startups y proyectos freelance desarrollando desde APIs hasta aplicaciones móviles con Flutter.",
+    "description3": "En 2025 fui ponente en el Primer Foro Nacional de la Agenda Estratégica de la Salud del TecNM, presentando investigación sobre IA aplicada a la salud.",
+    "english": "Inglés B2",
+    "location": "Morelia, Michoacán, México"
+  },
+  "experience": {
+    "title": "Experiencia",
+    "present": "Actualidad"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "view_code": "Ver código",
+    "view_demo": "Ver demo"
+  },
+  "skills": {
+    "title": "Tecnologías"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "¿Tienes un proyecto? Hablemos.",
+    "email_label": "Correo electrónico",
+    "message_label": "Mensaje",
+    "send": "Enviar mensaje",
+    "success": "¡Mensaje enviado!",
+    "location": "Morelia, México"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados"
+  }
+}

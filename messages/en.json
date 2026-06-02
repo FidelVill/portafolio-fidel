@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact",
+    "download_cv": "Download CV"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "title": "Fullstack Developer",
+    "subtitle": "Web · Mobile · AI",
+    "description": "Developer specialized in building high-performance web and mobile applications, with experience in AI integration and 11+ production deployments.",
+    "cta_projects": "View projects",
+    "cta_contact": "Contact me",
+    "open_to_work": "Open to work"
+  },
+  "about": {
+    "title": "About me",
+    "description1": "I'm a Computer Systems Engineer specialized in Software Development, passionate about building digital solutions that generate real impact.",
+    "description2": "With 2+ years of experience in real projects, I've worked in startups and freelance projects developing everything from APIs to mobile apps with Flutter.",
+    "description3": "In 2025 I was a speaker at Mexico's National Health Strategic Agenda Forum (TecNM), presenting research on AI applied to healthcare.",
+    "english": "English B2",
+    "location": "Morelia, Michoacán, Mexico"
+  },
+  "experience": {
+    "title": "Experience",
+    "present": "Present"
+  },
+  "projects": {
+    "title": "Projects",
+    "view_code": "View code",
+    "view_demo": "Live demo"
+  },
+  "skills": {
+    "title": "Technologies"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Have a project? Let's talk.",
+    "email_label": "Email",
+    "message_label": "Message",
+    "send": "Send message",
+    "success": "Message sent!",
+    "location": "Morelia, Mexico"
+  },
+  "footer": {
+    "rights": "All rights reserved"
+  }
+}
