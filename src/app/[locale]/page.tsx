@@ -1,4 +1,5 @@
 import Navbar from "@/components/layout/Navbar";
+import Hero from "@/components/sections/Hero";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -10,11 +11,7 @@ export default async function Home({ params }: PageProps) {
   return (
     <main className="min-h-screen bg-dark-900">
       <Navbar locale={locale} />
-      <div className="h-screen flex items-center justify-center">
-        <p className="text-white/50 font-mono text-sm">
-          &lt; Portafolio en construcción /&gt;
-        </p>
-      </div>
+      <Hero locale={locale} />
     </main>
   );
 }
