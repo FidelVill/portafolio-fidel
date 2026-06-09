@@ -2,6 +2,8 @@ import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
+import Experience from "@/components/sections/Experience";
+import Projects from "@/components/sections/Projects";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -16,6 +18,8 @@ export default async function Home({ params }: PageProps) {
       <Hero locale={locale} />
       <About locale={locale} />
       <Skills locale={locale} />
+      <Experience locale={locale} />
+      <Projects locale={locale} />
     </main>
   );
 }

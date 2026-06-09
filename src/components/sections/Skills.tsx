@@ -75,7 +75,7 @@ const categories = [
     border: "border-cyan-400/20",
     bg: "bg-cyan-400/5",
     skills: [
-      { name: "Azure DevOps", icon: <AzureDevOpsIcon /> },
+      { name: "Azure", icon: <AzureDevOpsIcon /> },
       { name: "Docker", icon: <SiDocker size={20} /> },
       { name: "Vercel", icon: <SiVercel size={20} /> },
       { name: "Git", icon: <SiGit size={20} /> },
