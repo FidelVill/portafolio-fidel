@@ -42,14 +42,15 @@ export default function About({ locale }: AboutProps) {
   return (
     <section id="about" className="py-24 px-4 max-w-6xl mx-auto">
       <div className="grid md:grid-cols-2 gap-16 items-center">
-
-        {/* Left — Code block */}
+        {/* Left — Code block + Stats */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
+          className="flex flex-col gap-6"
         >
+          {/* Code block */}
           <div className="glass rounded-2xl overflow-hidden">
             <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
               <div className="w-3 h-3 rounded-full bg-red-500/70" />
@@ -58,23 +59,64 @@ export default function About({ locale }: AboutProps) {
               <span className="ml-2 text-white/30 text-xs font-mono">about.ts</span>
             </div>
             <div className="p-6 font-mono text-sm leading-loose">
-              <p className="text-white/30">{"// Mi trayectoria"}</p>
+              <p className="text-white/30">{"// desarrollador"}</p>
               <p className="text-accent mt-2">const <span className="text-white">about</span> = {"{"}</p>
-              <p className="ml-4 text-white/70">experience: <span className="text-green-400">&quot;2+ años&quot;</span>,</p>
+              <p className="ml-4 text-white/70">name: <span className="text-green-400">"Fidel Villegas"</span>,</p>
+              <p className="ml-4 text-white/70">age: <span className="text-accent">23</span>,</p>
+              <p className="ml-4 text-white/70">role: <span className="text-green-400">"Fullstack + AI Dev"</span>,</p>
+              <p className="ml-4 text-white/70">experience: <span className="text-green-400">"2+ años"</span>,</p>
               <p className="ml-4 text-white/70">deployments: <span className="text-accent">11</span>,</p>
-              <p className="ml-4 text-white/70">speciality: <span className="text-green-400">&quot;Fullstack + IA&quot;</span>,</p>
-              <p className="ml-4 text-white/70">passion: [</p>
-              <p className="ml-8 text-green-400">&quot;Clean Code&quot;,</p>
-              <p className="ml-8 text-green-400">&quot;Scalable Apps&quot;,</p>
-              <p className="ml-8 text-green-400">&quot;AI Integration&quot;,</p>
-              <p className="ml-4 text-white/70">],</p>
-              <p className="ml-4 text-white/70">
-                openToWork: <span className="text-accent">true</span>,
-              </p>
+              <p className="ml-4 text-white/70">speaker: <span className="text-green-400">"TecNM Nacional 2025"</span>,</p>
+              <p className="ml-4 text-white/70">english: <span className="text-green-400">"B2"</span>,</p>
+              <p className="ml-4 text-white/70">available: <span className="text-accent">true</span>,</p>
               <p className="text-accent">{"}"}</p>
-              <p className="mt-4 text-white/30">
-                {"// export default developer 🚀"}
-              </p>
+            </div>
+          </div>
+
+          {/* Stats grid */}
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { value: "2+", label: locale === "es" ? "Años de experiencia" : "Years experience", color: "text-primary-500" },
+              { value: "11+", label: locale === "es" ? "Deploys en producción" : "Production deploys", color: "text-accent" },
+              { value: "5+", label: locale === "es" ? "Proyectos reales" : "Real projects", color: "text-green-400" },
+              { value: "1", label: locale === "es" ? "Ponencia nacional" : "National talk", color: "text-purple-400" },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="glass rounded-xl p-4 text-center"
+              >
+                <p className={`text-3xl font-extrabold ${stat.color}`}>
+                  {stat.value}
+                </p>
+                <p className="text-white/40 text-xs mt-1">{stat.label}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Mini timeline */}
+          <div className="glass rounded-2xl p-5">
+            <p className="text-white/30 font-mono text-xs mb-4">
+              {"// trayectoria"}
+            </p>
+            <div className="flex flex-col gap-3">
+              {[
+                { year: "2025", event: locale === "es" ? "Fullstack Dev · Cantera Digital" : "Fullstack Dev · Cantera Digital", color: "bg-primary-500" },
+                { year: "2025", event: locale === "es" ? "Becario · DArtesano" : "Intern · DArtesano", color: "bg-accent" },
+                { year: "2025", event: locale === "es" ? "Ponente TecNM Nacional 🎓" : "TecNM National Speaker 🎓", color: "bg-purple-500" },
+                { year: "2020", event: locale === "es" ? "Inicio ISC · ITM" : "Started CS · ITM", color: "bg-white/20" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <div className={`w-2 h-2 rounded-full ${item.color} shrink-0`} />
+                  <span className="text-white/30 font-mono text-xs w-10 shrink-0">
+                    {item.year}
+                  </span>
+                  <span className="text-white/70 text-xs">{item.event}</span>
+                </div>
+              ))}
             </div>
           </div>
         </motion.div>
