@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDown, MapPin } from "lucide-react";
+import { ArrowDown, MapPin, Download } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { FaLinkedinIn } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import Image from "next/image";
 
 const roles = [
   "Fullstack Developer",
@@ -18,8 +19,9 @@ interface HeroProps {
 }
 
 export default function Hero({ locale }: HeroProps) {
-  const [{ roleIndex, deleting }, setTypingState] = useState({ roleIndex: 0, deleting: false });
+  const [roleIndex, setRoleIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const current = roles[roleIndex];
@@ -30,13 +32,14 @@ export default function Hero({ locale }: HeroProps) {
         setDisplayed(current.slice(0, displayed.length + 1));
       }, 80);
     } else if (!deleting && displayed.length === current.length) {
-      timeout = setTimeout(() => setTypingState(prev => ({ ...prev, deleting: true })), 2000);
+      timeout = setTimeout(() => setDeleting(true), 2000);
     } else if (deleting && displayed.length > 0) {
       timeout = setTimeout(() => {
         setDisplayed(current.slice(0, displayed.length - 1));
       }, 40);
     } else if (deleting && displayed.length === 0) {
-      timeout = setTimeout(() => setTypingState(prev => ({ deleting: false, roleIndex: (prev.roleIndex + 1) % roles.length })), 0);
+      setDeleting(false);
+      setRoleIndex((prev) => (prev + 1) % roles.length);
     }
 
     return () => clearTimeout(timeout);
@@ -90,7 +93,7 @@ export default function Hero({ locale }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="text-white/60 text-base leading-relaxed mb-8 max-w-md"
+            className="text-white/60 text-base leading-relaxed mb-6 max-w-md"
           >
             {locale === "es"
               ? "Desarrollo aplicaciones web y móviles de alto rendimiento con integración de IA. +11 despliegues en producción."
@@ -115,18 +118,21 @@ export default function Hero({ locale }: HeroProps) {
             transition={{ delay: 0.7 }}
             className="flex flex-wrap gap-3 mb-8"
           >
-            <a
+            <motion.a
               href="#projects"
               className="px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white text-sm font-semibold rounded-lg transition-all hover:scale-105"
             >
               {locale === "es" ? "Ver proyectos" : "View projects"} →
-            </a>
-            <a
-              href="#contact"
-              className="px-6 py-3 border border-white/20 hover:border-white/40 text-white/70 hover:text-white text-sm font-semibold rounded-lg transition-all"
+            </motion.a>
+            
+            <motion.a
+              href="/CV_Fidel_Villegas_2025.docx"
+              download
+              className="px-6 py-3 border border-white/20 hover:border-white/40 text-white/70 hover:text-white text-sm font-semibold rounded-lg transition-all flex items-center gap-2"
             >
-              {locale === "es" ? "Contáctame" : "Contact me"}
-            </a>
+              <Download size={14} />
+              CV
+            </motion.a>
           </motion.div>
 
           {/* Social + Stats */}
@@ -142,7 +148,7 @@ export default function Hero({ locale }: HeroProps) {
             </a>
             <a href="https://linkedin.com/in/fidelvillegashernandez" target="_blank"
               className="text-white/40 hover:text-white transition-colors">
-              <FaLinkedinIn size={20} />
+              <FaLinkedin size={20} />
             </a>
             <div className="w-px h-6 bg-white/10" />
             <div className="flex gap-6 text-sm">
@@ -166,39 +172,50 @@ export default function Hero({ locale }: HeroProps) {
           </motion.div>
         </div>
 
-        {/* Right — Code block */}
+        {/* Right — Photo */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
-          className="order-1 md:order-2"
+          className="order-1 md:order-2 flex justify-center"
         >
-          <div className="glass rounded-2xl overflow-hidden">
-            {/* Terminal header */}
-            <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
-              <div className="w-3 h-3 rounded-full bg-red-500/70" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
-              <div className="w-3 h-3 rounded-full bg-green-500/70" />
-              <span className="ml-2 text-white/30 text-xs font-mono">
-                fidel.ts
+          <div className="relative">
+            {/* Glow effect */}
+            <div className="absolute inset-0 rounded-2xl bg-primary-500/20 blur-2xl scale-110" />
+
+            {/* Photo */}
+            <div className="relative w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden border border-white/10">
+              <Image
+                src="/foto_perfil.png"
+                alt="Fidel Villegas"
+                fill
+                className="object-cover object-top"
+                priority
+              />
+            </div>
+
+            {/* Floating badge */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 3 }}
+              className="absolute -bottom-4 -left-4 glass rounded-xl px-4 py-2 flex items-center gap-2"
+            >
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-white text-xs font-medium">
+                {locale === "es" ? "Disponible" : "Available"}
               </span>
-            </div>
-            {/* Code */}
-            <div className="p-6 font-mono text-sm leading-relaxed">
-              <p className="text-white/30">{"// About me"}</p>
-              <p className="text-accent mt-2">const <span className="text-white">developer</span> = {"{"}</p>
-              <p className="ml-4 text-white/70">name: <span className="text-green-400">&quot;Fidel Villegas&quot;</span>,</p>
-              <p className="ml-4 text-white/70">role: <span className="text-green-400">&quot;Fullstack Developer&quot;</span>,</p>
-              <p className="ml-4 text-white/70">location: <span className="text-green-400">&quot;Morelia, MX&quot;</span>,</p>
-              <p className="ml-4 text-white/70">stack: [</p>
-              <p className="ml-8 text-green-400">&quot;React&quot;, &quot;Angular&quot;, &quot;Laravel&quot;,</p>
-              <p className="ml-8 text-green-400">&quot;Python&quot;, &quot;Next.js&quot;, &quot;Flutter&quot;,</p>
-              <p className="ml-4 text-white/70">],</p>
-              <p className="ml-4 text-white/70">ai: <span className="text-green-400">&quot;OpenAI API&quot;</span>,</p>
-              <p className="ml-4 text-white/70">available: <span className="text-accent">true</span>,</p>
-              <p className="text-accent">{"}"}</p>
-              <p className="mt-4 text-white/30">{"// Ponente TecNM 2025 🎓"}</p>
-            </div>
+            </motion.div>
+
+            {/* Floating stack badge */}
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ repeat: Infinity, duration: 3, delay: 1 }}
+              className="absolute -top-4 -right-4 glass rounded-xl px-4 py-2"
+            >
+              <span className="text-white/70 text-xs font-mono">
+                Fullstack + AI
+              </span>
+            </motion.div>
           </div>
         </motion.div>
 
