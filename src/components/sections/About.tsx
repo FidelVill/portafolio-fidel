@@ -60,13 +60,13 @@ export default function About({ locale }: AboutProps) {
             <div className="p-6 font-mono text-sm leading-loose">
               <p className="text-white/30">{"// Mi trayectoria"}</p>
               <p className="text-accent mt-2">const <span className="text-white">about</span> = {"{"}</p>
-              <p className="ml-4 text-white/70">experience: <span className="text-green-400">"2+ años"</span>,</p>
+              <p className="ml-4 text-white/70">experience: <span className="text-green-400">&quot;2+ años&quot;</span>,</p>
               <p className="ml-4 text-white/70">deployments: <span className="text-accent">11</span>,</p>
-              <p className="ml-4 text-white/70">speciality: <span className="text-green-400">"Fullstack + IA"</span>,</p>
+              <p className="ml-4 text-white/70">speciality: <span className="text-green-400">&quot;Fullstack + IA&quot;</span>,</p>
               <p className="ml-4 text-white/70">passion: [</p>
-              <p className="ml-8 text-green-400">"Clean Code",</p>
-              <p className="ml-8 text-green-400">"Scalable Apps",</p>
-              <p className="ml-8 text-green-400">"AI Integration",</p>
+              <p className="ml-8 text-green-400">&quot;Clean Code&quot;,</p>
+              <p className="ml-8 text-green-400">&quot;Scalable Apps&quot;,</p>
+              <p className="ml-8 text-green-400">&quot;AI Integration&quot;,</p>
               <p className="ml-4 text-white/70">],</p>
               <p className="ml-4 text-white/70">
                 openToWork: <span className="text-accent">true</span>,

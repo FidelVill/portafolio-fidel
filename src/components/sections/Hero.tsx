@@ -18,9 +18,8 @@ interface HeroProps {
 }
 
 export default function Hero({ locale }: HeroProps) {
-  const [roleIndex, setRoleIndex] = useState(0);
+  const [{ roleIndex, deleting }, setTypingState] = useState({ roleIndex: 0, deleting: false });
   const [displayed, setDisplayed] = useState("");
-  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const current = roles[roleIndex];
@@ -31,14 +30,13 @@ export default function Hero({ locale }: HeroProps) {
         setDisplayed(current.slice(0, displayed.length + 1));
       }, 80);
     } else if (!deleting && displayed.length === current.length) {
-      timeout = setTimeout(() => setDeleting(true), 2000);
+      timeout = setTimeout(() => setTypingState(prev => ({ ...prev, deleting: true })), 2000);
     } else if (deleting && displayed.length > 0) {
       timeout = setTimeout(() => {
         setDisplayed(current.slice(0, displayed.length - 1));
       }, 40);
     } else if (deleting && displayed.length === 0) {
-      setDeleting(false);
-      setRoleIndex((prev) => (prev + 1) % roles.length);
+      timeout = setTimeout(() => setTypingState(prev => ({ deleting: false, roleIndex: (prev.roleIndex + 1) % roles.length })), 0);
     }
 
     return () => clearTimeout(timeout);
@@ -189,14 +187,14 @@ export default function Hero({ locale }: HeroProps) {
             <div className="p-6 font-mono text-sm leading-relaxed">
               <p className="text-white/30">{"// About me"}</p>
               <p className="text-accent mt-2">const <span className="text-white">developer</span> = {"{"}</p>
-              <p className="ml-4 text-white/70">name: <span className="text-green-400">"Fidel Villegas"</span>,</p>
-              <p className="ml-4 text-white/70">role: <span className="text-green-400">"Fullstack Developer"</span>,</p>
-              <p className="ml-4 text-white/70">location: <span className="text-green-400">"Morelia, MX"</span>,</p>
+              <p className="ml-4 text-white/70">name: <span className="text-green-400">&quot;Fidel Villegas&quot;</span>,</p>
+              <p className="ml-4 text-white/70">role: <span className="text-green-400">&quot;Fullstack Developer&quot;</span>,</p>
+              <p className="ml-4 text-white/70">location: <span className="text-green-400">&quot;Morelia, MX&quot;</span>,</p>
               <p className="ml-4 text-white/70">stack: [</p>
-              <p className="ml-8 text-green-400">"React", "Angular", "Laravel",</p>
-              <p className="ml-8 text-green-400">"Python", "Next.js", "Flutter",</p>
+              <p className="ml-8 text-green-400">&quot;React&quot;, &quot;Angular&quot;, &quot;Laravel&quot;,</p>
+              <p className="ml-8 text-green-400">&quot;Python&quot;, &quot;Next.js&quot;, &quot;Flutter&quot;,</p>
               <p className="ml-4 text-white/70">],</p>
-              <p className="ml-4 text-white/70">ai: <span className="text-green-400">"OpenAI API"</span>,</p>
+              <p className="ml-4 text-white/70">ai: <span className="text-green-400">&quot;OpenAI API&quot;</span>,</p>
               <p className="ml-4 text-white/70">available: <span className="text-accent">true</span>,</p>
               <p className="text-accent">{"}"}</p>
               <p className="mt-4 text-white/30">{"// Ponente TecNM 2025 🎓"}</p>

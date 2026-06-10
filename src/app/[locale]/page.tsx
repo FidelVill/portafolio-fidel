@@ -4,6 +4,7 @@ import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
 import Experience from "@/components/sections/Experience";
 import Projects from "@/components/sections/Projects";
+import Contact from "@/components/sections/Contact";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -20,6 +21,7 @@ export default async function Home({ params }: PageProps) {
       <Skills locale={locale} />
       <Experience locale={locale} />
       <Projects locale={locale} />
+      <Contact locale={locale} />
     </main>
   );
 }
