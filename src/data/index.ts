@@ -135,40 +135,82 @@ export const certifications: Certification[] = [
 ];
 
 export const skills: Skill[] = [
+  // Lenguajes
+  { name: "JavaScript", category: "frontend" },
+  { name: "TypeScript", category: "frontend" },
+  { name: "Python", category: "backend" },
+  { name: "PHP", category: "backend" },
+  { name: "Java", category: "backend" },
+  { name: "C#", category: "backend" },
+
   // Frontend
   { name: "React.js", category: "frontend" },
   { name: "Angular", category: "frontend" },
   { name: "Next.js", category: "frontend" },
   { name: "Tailwind CSS", category: "frontend" },
-  { name: "TypeScript", category: "frontend" },
+  { name: "Bootstrap", category: "frontend" },
+  { name: "HTML5", category: "frontend" },
+  { name: "CSS3", category: "frontend" },
+
   // Mobile
   { name: "Flutter", category: "mobile" },
   { name: "React Native", category: "mobile" },
+
   // Backend
   { name: "Laravel", category: "backend" },
-  { name: "Python", category: "backend" },
   { name: "Flask", category: "backend" },
   { name: "Node.js", category: "backend" },
+  { name: "Express", category: "backend" },
+
   // Database
   { name: "Supabase", category: "database" },
   { name: "Firebase", category: "database" },
   { name: "MySQL", category: "database" },
   { name: "PostgreSQL", category: "database" },
   { name: "MongoDB", category: "database" },
+
   // Cloud
   { name: "Azure", category: "cloud" },
   { name: "Docker", category: "cloud" },
   { name: "Vercel", category: "cloud" },
   { name: "Hostinger", category: "cloud" },
+  { name: "GoDaddy", category: "cloud" },
+
   // AI
   { name: "OpenAI API", category: "ai" },
   { name: "n8n", category: "ai" },
   { name: "Blip", category: "ai" },
+  { name: "Claude", category: "ai" },
+  { name: "Gemini API", category: "ai" },
+
   // Tools
   { name: "Git", category: "tools" },
   { name: "GitHub", category: "tools" },
+  { name: "GitLab", category: "tools" },
   { name: "Figma", category: "tools" },
-  { name: "Power BI", category: "tools" },
-  { name: "Swagger", category: "tools" },
   { name: "Postman", category: "tools" },
+  { name: "Swagger", category: "tools" },
+  { name: "Power BI", category: "tools" },
+  { name: "Tableau", category: "tools" },
+  { name: "Pandas", category: "tools" },
+
+  // IDEs
+  { name: "VS Code", category: "tools" },
+  { name: "Visual Studio", category: "tools" },
+  { name: "Android Studio", category: "tools" },
+  { name: "Cursor", category: "tools" },
+  { name: "Antigravity", category: "tools" },
+  { name: "Windsurf/Devin", category: "tools" },
+
+  // Productividad
+  { name: "Azure DevOps", category: "tools" },
+  { name: "Trello", category: "tools" },
+  { name: "TrackingTime", category: "tools" },
+  { name: "Teams", category: "tools" },
+  { name: "Discord", category: "tools" },
+  { name: "Office 365", category: "tools" },
+
+  // OS
+  { name: "Windows", category: "tools" },
+  { name: "Ubuntu/Linux", category: "tools" },
 ];

@@ -37,5 +37,9 @@ export interface Skill {
     | "cloud"
     | "tools"
     | "ai"
-    | "mobile";
+    | "mobile"
+    | "languages"
+    | "devtools"
+    | "productivity"
+    | "os";
 }

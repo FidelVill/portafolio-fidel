@@ -5,6 +5,7 @@ import Skills from "@/components/sections/Skills";
 import Experience from "@/components/sections/Experience";
 import Projects from "@/components/sections/Projects";
 import Contact from "@/components/sections/Contact";
+import Footer from "@/components/layout/Footer";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -22,6 +23,7 @@ export default async function Home({ params }: PageProps) {
       <Experience locale={locale} />
       <Projects locale={locale} />
       <Contact locale={locale} />
+      <Footer locale={locale} />
     </main>
   );
 }
