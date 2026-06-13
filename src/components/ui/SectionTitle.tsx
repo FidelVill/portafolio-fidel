@@ -28,12 +28,12 @@ export default function SectionTitle({
         className
       )}
     >
-      <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+      <h2 className="text-3xl md:text-4xl font-bold text-dark-900 dark:text-white mb-4">
         {title}
         <span className="text-primary-500">.</span>
       </h2>
       {subtitle && (
-        <p className="text-white/60 text-lg max-w-2xl mx-auto">{subtitle}</p>
+        <p className="text-dark-900/60 dark:text-white/60 text-lg max-w-2xl mx-auto">{subtitle}</p>
       )}
       <div
         className={cn(

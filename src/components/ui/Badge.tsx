@@ -12,7 +12,7 @@ export default function Badge({
   className,
 }: BadgeProps) {
   const variants = {
-    default: "bg-white/10 text-white/80",
+    default: "bg-dark-900/10 dark:bg-white/10 text-dark-900/80 dark:text-white/80",
     primary: "bg-primary-500/20 text-primary-500 border border-primary-500/30",
     accent: "bg-accent/20 text-accent border border-accent/30",
   };

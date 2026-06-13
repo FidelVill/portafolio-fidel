@@ -31,11 +31,11 @@ export default function Button({
 
   const variants = {
     primary:
-      "bg-primary-500 text-white hover:bg-primary-600 shadow-lg shadow-primary-500/25",
+      "bg-primary-500 text-dark-900 dark:text-white hover:bg-primary-600 shadow-lg shadow-primary-500/25",
     outline:
-      "border border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white",
+      "border border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-dark-900 dark:hover:text-white",
     ghost:
-      "text-white/70 hover:text-white hover:bg-white/10",
+      "text-dark-900/70 dark:text-white/70 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10",
   };
 
   const sizes = {

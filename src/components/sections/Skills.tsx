@@ -203,11 +203,11 @@ export default function Skills({ locale }: SkillsProps) {
         <p className="text-primary-500 font-mono text-sm mb-3">
           {"// habilidades técnicas"}
         </p>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-white">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-dark-900 dark:text-white">
           Mi Stack Tecnológico
           <span className="text-primary-500">.</span>
         </h2>
-        <p className="text-white/50 mt-3 max-w-xl">
+        <p className="text-dark-900/50 dark:text-white/50 mt-3 max-w-xl">
           {locale === "es"
             ? "Tecnologías con las que construyo soluciones de extremo a extremo."
             : "Technologies I use to build end-to-end solutions."}
@@ -235,7 +235,7 @@ export default function Skills({ locale }: SkillsProps) {
                   className={`flex items-center gap-2 px-3 py-2 rounded-lg ${cat.bg} border ${cat.border} cursor-default`}
                 >
                   <span className={cat.color}>{skill.icon}</span>
-                  <span className="text-white/70 text-xs font-medium">
+                  <span className="text-dark-900/70 dark:text-white/70 text-xs font-medium">
                     {skill.name}
                   </span>
                 </motion.div>

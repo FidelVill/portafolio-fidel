@@ -52,23 +52,23 @@ export default function About({ locale }: AboutProps) {
         >
           {/* Code block */}
           <div className="glass rounded-2xl overflow-hidden">
-            <div className="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
+            <div className="flex items-center gap-2 px-4 py-3 bg-dark-900/5 dark:bg-white/5 border-b border-dark-900/5 dark:border-white/5">
               <div className="w-3 h-3 rounded-full bg-red-500/70" />
               <div className="w-3 h-3 rounded-full bg-yellow-500/70" />
               <div className="w-3 h-3 rounded-full bg-green-500/70" />
-              <span className="ml-2 text-white/30 text-xs font-mono">about.ts</span>
+              <span className="ml-2 text-dark-900/30 dark:text-white/30 text-xs font-mono">about.ts</span>
             </div>
             <div className="p-6 font-mono text-sm leading-loose">
-              <p className="text-white/30">{"// desarrollador"}</p>
-              <p className="text-accent mt-2">const <span className="text-white">about</span> = {"{"}</p>
-              <p className="ml-4 text-white/70">name: <span className="text-green-400">"Fidel Villegas"</span>,</p>
-              <p className="ml-4 text-white/70">age: <span className="text-accent">23</span>,</p>
-              <p className="ml-4 text-white/70">role: <span className="text-green-400">"Fullstack + AI Dev"</span>,</p>
-              <p className="ml-4 text-white/70">experience: <span className="text-green-400">"2+ años"</span>,</p>
-              <p className="ml-4 text-white/70">deployments: <span className="text-accent">11</span>,</p>
-              <p className="ml-4 text-white/70">speaker: <span className="text-green-400">"TecNM Nacional 2025"</span>,</p>
-              <p className="ml-4 text-white/70">english: <span className="text-green-400">"B2"</span>,</p>
-              <p className="ml-4 text-white/70">available: <span className="text-accent">true</span>,</p>
+              <p className="text-dark-900/30 dark:text-white/30">{"// desarrollador"}</p>
+              <p className="text-accent mt-2">const <span className="text-dark-900 dark:text-white">about</span> = {"{"}</p>
+              <p className="ml-4 text-dark-900/70 dark:text-white/70">name: <span className="text-green-400">"Fidel Villegas"</span>,</p>
+              <p className="ml-4 text-dark-900/70 dark:text-white/70">age: <span className="text-accent">23</span>,</p>
+              <p className="ml-4 text-dark-900/70 dark:text-white/70">role: <span className="text-green-400">"Fullstack + AI Dev"</span>,</p>
+              <p className="ml-4 text-dark-900/70 dark:text-white/70">experience: <span className="text-green-400">"2+ años"</span>,</p>
+              <p className="ml-4 text-dark-900/70 dark:text-white/70">deployments: <span className="text-accent">11</span>,</p>
+              <p className="ml-4 text-dark-900/70 dark:text-white/70">speaker: <span className="text-green-400">"TecNM Nacional 2025"</span>,</p>
+              <p className="ml-4 text-dark-900/70 dark:text-white/70">english: <span className="text-green-400">"B2"</span>,</p>
+              <p className="ml-4 text-dark-900/70 dark:text-white/70">available: <span className="text-accent">true</span>,</p>
               <p className="text-accent">{"}"}</p>
             </div>
           </div>
@@ -92,32 +92,9 @@ export default function About({ locale }: AboutProps) {
                 <p className={`text-3xl font-extrabold ${stat.color}`}>
                   {stat.value}
                 </p>
-                <p className="text-white/40 text-xs mt-1">{stat.label}</p>
+                <p className="text-dark-900/40 dark:text-white/40 text-xs mt-1">{stat.label}</p>
               </motion.div>
             ))}
-          </div>
-
-          {/* Mini timeline */}
-          <div className="glass rounded-2xl p-5">
-            <p className="text-white/30 font-mono text-xs mb-4">
-              {"// trayectoria"}
-            </p>
-            <div className="flex flex-col gap-3">
-              {[
-                { year: "2025", event: locale === "es" ? "Fullstack Dev · Cantera Digital" : "Fullstack Dev · Cantera Digital", color: "bg-primary-500" },
-                { year: "2025", event: locale === "es" ? "Becario · DArtesano" : "Intern · DArtesano", color: "bg-accent" },
-                { year: "2025", event: locale === "es" ? "Ponente TecNM Nacional 🎓" : "TecNM National Speaker 🎓", color: "bg-purple-500" },
-                { year: "2020", event: locale === "es" ? "Inicio ISC · ITM" : "Started CS · ITM", color: "bg-white/20" },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div className={`w-2 h-2 rounded-full ${item.color} shrink-0`} />
-                  <span className="text-white/30 font-mono text-xs w-10 shrink-0">
-                    {item.year}
-                  </span>
-                  <span className="text-white/70 text-xs">{item.event}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </motion.div>
 
@@ -132,18 +109,18 @@ export default function About({ locale }: AboutProps) {
             <p className="text-primary-500 font-mono text-sm mb-3">
               {"// sobre mí"}
             </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-dark-900 dark:text-white mb-6 leading-tight">
               {locale === "es"
                 ? "Construyo soluciones digitales que funcionan"
                 : "I build digital solutions that work"}
               <span className="text-primary-500">.</span>
             </h2>
-            <p className="text-white/60 leading-relaxed mb-4">
+            <p className="text-dark-900/60 dark:text-white/60 leading-relaxed mb-4">
               {locale === "es"
                 ? "Soy Ingeniero en Sistemas Computacionales apasionado por crear aplicaciones web y móviles con impacto real. Me especializo en el ciclo completo de desarrollo: desde el diseño en Figma hasta el despliegue en producción."
                 : "I'm a Computer Systems Engineer passionate about creating web and mobile apps with real impact. I specialize in the full development cycle: from Figma design to production deployment."}
             </p>
-            <p className="text-white/60 leading-relaxed mb-8">
+            <p className="text-dark-900/60 dark:text-white/60 leading-relaxed mb-8">
               {locale === "es"
                 ? "En 2025 fui ponente en el Primer Foro Nacional de la Agenda Estratégica de la Salud del TecNM, presentando investigación sobre modelos de IA aplicados al cálculo de insulina en diabetes tipo 1."
                 : "In 2025 I was a speaker at Mexico's National Health Strategic Agenda Forum (TecNM), presenting AI models applied to insulin calculation for type 1 diabetes patients."}
@@ -163,14 +140,14 @@ export default function About({ locale }: AboutProps) {
               >
                 <div className="flex items-center gap-2 text-primary-500 mb-2">
                   {card.icon}
-                  <span className="text-xs font-medium text-white/40">
+                  <span className="text-xs font-medium text-dark-900/40 dark:text-white/40">
                     {card.label}
                   </span>
                 </div>
-                <p className="text-white text-sm font-semibold leading-tight">
+                <p className="text-dark-900 dark:text-white text-sm font-semibold leading-tight">
                   {card.value}
                 </p>
-                <p className="text-white/40 text-xs mt-1">{card.sub}</p>
+                <p className="text-dark-900/40 dark:text-white/40 text-xs mt-1">{card.sub}</p>
               </motion.div>
             ))}
           </div>

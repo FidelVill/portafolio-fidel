@@ -15,7 +15,7 @@ export default async function Home({ params }: PageProps) {
   const { locale } = await params;
 
   return (
-    <main className="min-h-screen bg-dark-900">
+    <main className="min-h-screen bg-light-50 dark:bg-dark-900">
       <Navbar locale={locale} />
       <Hero locale={locale} />
       <About locale={locale} />

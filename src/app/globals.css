@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
 @theme {
   --color-primary-50: #eff6ff;
   --color-primary-100: #dbeafe;
@@ -11,6 +12,11 @@
   --color-dark-700: #334155;
   --color-dark-600: #475569;
   --color-accent: #06B6D4;
+
+  --color-light-50: #ffffff;
+  --color-light-100: #f8fafc;
+  --color-light-200: #e2e8f0;
+  --color-light-300: #cbd5e1;
 
   --font-sans: var(--font-inter), sans-serif;
   --font-mono: var(--font-fira-code), monospace;
@@ -29,18 +35,19 @@
   }
 }
 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+html {
+  scroll-behavior: smooth;
+}
 
-  body {
-    @apply bg-dark-900 text-white antialiased;
-  }
+body {
+  @apply bg-light-50 text-dark-900 dark:bg-dark-900 dark:text-white antialiased transition-colors duration-300;
+}
 
-  ::selection {
-    @apply bg-primary-500 text-white;
-  }
+
+
+::selection {
+  background-color: #1A56DB;
+  color: #ffffff;
 }
 
 @layer utilities {
@@ -49,6 +56,6 @@
   }
 
   .glass {
-    @apply bg-white/5 backdrop-blur-sm border border-white/10;
+    @apply bg-dark-900/5 border-dark-900/10 dark:bg-white/5 dark:border-white/10 backdrop-blur-sm border;
   }
 }

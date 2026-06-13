@@ -22,14 +22,14 @@ export default function Projects({ locale }: ProjectsProps) {
           {"// proyectos destacados"}
         </p>
         <div className="flex items-end justify-between">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-white">
+          <h2 className="text-3xl md:text-4xl font-extrabold text-dark-900 dark:text-white">
             {locale === "es" ? "Lo que he construido" : "What I've built"}
             <span className="text-primary-500">.</span>
           </h2>
           <a
             href="https://github.com/FidelVill"
             target="_blank"
-            className="hidden md:flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors"
+            className="hidden md:flex items-center gap-2 text-dark-900/40 dark:text-white/40 hover:text-dark-900 dark:hover:text-white text-sm transition-colors"
           >
             <SiGithub size={16} />
             {locale === "es" ? "Ver todos en GitHub" : "View all on GitHub"}
@@ -53,7 +53,7 @@ export default function Projects({ locale }: ProjectsProps) {
             <div className={`h-1 w-full ${
               i === 0
                 ? "bg-gradient-to-r from-primary-500 to-accent"
-                : "bg-white/5"
+                : "bg-dark-900/5 dark:bg-white/5"
             }`} />
 
             <div className={`p-6 ${i === 0 ? "md:flex md:gap-8" : ""}`}>
@@ -63,10 +63,10 @@ export default function Projects({ locale }: ProjectsProps) {
                   <span className="text-xs font-mono text-primary-500 border border-primary-500/30 px-2 py-1 rounded-full">
                     {locale === "es" ? "// Proyecto destacado" : "// Featured project"}
                   </span>
-                  <h3 className="text-white font-bold text-2xl mt-3 mb-3">
+                  <h3 className="text-dark-900 dark:text-white font-bold text-2xl mt-3 mb-3">
                     {project.title}
                   </h3>
-                  <p className="text-white/60 text-sm leading-relaxed">
+                  <p className="text-dark-900/60 dark:text-white/60 text-sm leading-relaxed">
                     {project.description[locale as "es" | "en"]}
                   </p>
                 </div>
@@ -75,10 +75,10 @@ export default function Projects({ locale }: ProjectsProps) {
               <div className={i === 0 ? "md:w-1/2" : ""}>
                 {i !== 0 && (
                   <>
-                    <h3 className="text-white font-bold text-lg mb-2">
+                    <h3 className="text-dark-900 dark:text-white font-bold text-lg mb-2">
                       {project.title}
                     </h3>
-                    <p className="text-white/60 text-sm leading-relaxed mb-4">
+                    <p className="text-dark-900/60 dark:text-white/60 text-sm leading-relaxed mb-4">
                       {project.description[locale as "es" | "en"]}
                     </p>
                   </>
@@ -93,7 +93,7 @@ export default function Projects({ locale }: ProjectsProps) {
                       ? "bg-yellow-400"
                       : "bg-blue-400"
                   } animate-pulse`} />
-                  <span className="text-xs text-white/40">
+                  <span className="text-xs text-dark-900/40 dark:text-white/40">
                     {project.status === "production"
                       ? locale === "es" ? "En producción" : "In production"
                       : project.status === "maintenance"
@@ -107,7 +107,7 @@ export default function Projects({ locale }: ProjectsProps) {
                   {project.tech.map((t) => (
                     <span
                       key={t}
-                      className="text-xs px-2 py-1 rounded-md bg-white/5 text-white/50 border border-white/10"
+                      className="text-xs px-2 py-1 rounded-md bg-dark-900/5 dark:bg-white/5 text-dark-900/50 dark:text-white/50 border border-dark-900/10 dark:border-white/10"
                     >
                       {t}
                     </span>
@@ -120,7 +120,7 @@ export default function Projects({ locale }: ProjectsProps) {
                     <a
                       href={project.demo}
                       target="_blank"
-                      className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white transition-colors"
+                      className="flex items-center gap-1.5 text-xs text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors"
                     >
                       <ExternalLink size={14} />
                       {locale === "es" ? "Ver demo" : "Live demo"}
@@ -130,7 +130,7 @@ export default function Projects({ locale }: ProjectsProps) {
                     <a
                       href={project.repo}
                       target="_blank"
-                      className="flex items-center gap-1.5 text-xs text-white/50 hover:text-white transition-colors"
+                      className="flex items-center gap-1.5 text-xs text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors"
                     >
                       <SiGithub size={14} />
                       {locale === "es" ? "Ver código" : "View code"}

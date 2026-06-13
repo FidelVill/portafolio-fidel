@@ -12,13 +12,13 @@ export default function Footer({ locale }: FooterProps) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/5 py-8 px-4">
+    <footer className="border-t border-dark-900/5 dark:border-white/5 py-8 px-4">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
 
         {/* Logo */}
         <motion.a
           href="#"
-          className="font-mono text-sm font-bold text-white/50 hover:text-white transition-colors"
+          className="font-mono text-sm font-bold text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors"
           whileHover={{ scale: 1.05 }}
         >
           <span className="text-primary-500">&lt;</span>
@@ -27,7 +27,7 @@ export default function Footer({ locale }: FooterProps) {
         </motion.a>
 
         {/* Copy */}
-        <p className="text-white/30 text-xs text-center">
+        <p className="text-dark-900/30 dark:text-white/30 text-xs text-center">
           © {year} Fidel Villegas Hernández ·{" "}
           {locale === "es"
             ? "Todos los derechos reservados"
@@ -39,7 +39,7 @@ export default function Footer({ locale }: FooterProps) {
           <motion.a
             href="https://github.com/FidelVill"
             target="_blank"
-            className="text-white/30 hover:text-white transition-colors"
+            className="text-dark-900/30 dark:text-white/30 hover:text-dark-900 dark:hover:text-white transition-colors"
           >
             <SiGithub size={16} />
           </motion.a>
@@ -47,14 +47,14 @@ export default function Footer({ locale }: FooterProps) {
           <motion.a
             href="https://linkedin.com/in/fidelvillegashernandez"
             target="_blank"
-            className="text-white/30 hover:text-white transition-colors"
+            className="text-dark-900/30 dark:text-white/30 hover:text-dark-900 dark:hover:text-white transition-colors"
           >
             <FaLinkedin size={16} />
           </motion.a>
           
           <motion.a
             href="mailto:villegas.h.del01@gmail.com"
-            className="text-white/30 hover:text-white transition-colors text-xs font-mono"
+            className="text-dark-900/30 dark:text-white/30 hover:text-dark-900 dark:hover:text-white transition-colors text-xs font-mono"
           >
             villegas.h.del01@gmail.com
           </motion.a>

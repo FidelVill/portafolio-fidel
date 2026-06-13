@@ -40,7 +40,7 @@ export default function Navbar({ locale }: NavbarProps) {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-dark-900/90 backdrop-blur-md border-b border-white/5 py-3"
+          ? "bg-light-50/90 dark:bg-dark-900/90 backdrop-blur-md border-b border-dark-900/5 dark:border-white/5 py-3"
           : "py-5"
       )}
     >
@@ -48,7 +48,7 @@ export default function Navbar({ locale }: NavbarProps) {
         {/* Logo */}
         <motion.a
           href="#"
-          className="font-mono text-lg font-bold text-white"
+          className="font-mono text-lg font-bold text-dark-900 dark:text-white"
           whileHover={{ scale: 1.05 }}
         >
           <span className="text-primary-500">&lt;</span>
@@ -67,7 +67,7 @@ export default function Navbar({ locale }: NavbarProps) {
                   "text-sm font-medium transition-colors duration-200",
                   active === link.href
                     ? "text-primary-500"
-                    : "text-white/60 hover:text-white"
+                    : "text-dark-900/60 dark:text-white/60 hover:text-dark-900 dark:hover:text-white"
                 )}
               >
                 {link.label[locale as "es" | "en"]}
@@ -81,7 +81,7 @@ export default function Navbar({ locale }: NavbarProps) {
           {/* Lang Toggle */}
           <a
             href={locale === "es" ? "/en" : "/es"}
-            className="text-xs font-mono font-bold text-white/50 hover:text-white transition-colors px-2 py-1 rounded border border-white/10 hover:border-white/30"
+            className="text-xs font-mono font-bold text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors px-2 py-1 rounded border border-dark-900/10 dark:border-white/10 hover:border-dark-900/30 dark:hover:border-white/30"
           >
             {locale === "es" ? "EN" : "ES"}
           </a>
@@ -89,7 +89,7 @@ export default function Navbar({ locale }: NavbarProps) {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all"
+            className="p-2 rounded-lg text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10 transition-all"
           >
             {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
           </button>
@@ -98,14 +98,14 @@ export default function Navbar({ locale }: NavbarProps) {
           <a
             href="https://github.com/FidelVill"
             target="_blank"
-            className="p-2 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all"
+            className="p-2 rounded-lg text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10 transition-all"
           >
             <SiGithub size={16} />
           </a>
           <a
             href="https://linkedin.com/in/fidelvillegashernandez"
             target="_blank"
-            className="p-2 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all"
+            className="p-2 rounded-lg text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10 transition-all"
           >
             <FaLinkedinIn size={16} />
           </a>
@@ -123,7 +123,7 @@ export default function Navbar({ locale }: NavbarProps) {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden p-2 text-white/70 hover:text-white"
+          className="md:hidden p-2 text-dark-900/70 dark:text-white/70 hover:text-dark-900 dark:hover:text-white"
         >
           {menuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -136,7 +136,7 @@ export default function Navbar({ locale }: NavbarProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-dark-900/95 backdrop-blur-md border-t border-white/5"
+            className="md:hidden bg-light-50/95 dark:bg-dark-900/95 backdrop-blur-md border-t border-dark-900/5 dark:border-white/5"
           >
             <ul className="flex flex-col px-4 py-4 gap-4">
               {navLinks.map((link) => (
@@ -147,22 +147,22 @@ export default function Navbar({ locale }: NavbarProps) {
                       setActive(link.href);
                       setMenuOpen(false);
                     }}
-                    className="text-sm font-medium text-white/70 hover:text-white transition-colors"
+                    className="text-sm font-medium text-dark-900/70 dark:text-white/70 hover:text-dark-900 dark:hover:text-white transition-colors"
                   >
                     {link.label[locale as "es" | "en"]}
                   </a>
                 </li>
               ))}
-              <li className="flex items-center gap-3 pt-2 border-t border-white/10">
+              <li className="flex items-center gap-3 pt-2 border-t border-dark-900/10 dark:border-white/10">
                 <a href={locale === "es" ? "/en" : "/es"}
-                  className="text-xs font-mono font-bold text-white/50 hover:text-white transition-colors px-2 py-1 rounded border border-white/10">
+                  className="text-xs font-mono font-bold text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors px-2 py-1 rounded border border-dark-900/10 dark:border-white/10">
                   {locale === "es" ? "EN" : "ES"}
                 </a>
-                <button onClick={toggleTheme} className="p-2 text-white/50 hover:text-white">
+                <button onClick={toggleTheme} className="p-2 text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white">
                   {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
                 </button>
                 <a href="/cv.pdf" download
-                  className="ml-auto px-4 py-2 text-xs font-semibold bg-primary-500 text-white rounded-lg">
+                  className="ml-auto px-4 py-2 text-xs font-semibold bg-primary-500 text-dark-900 dark:text-white rounded-lg">
                   CV
                 </a>
               </li>
