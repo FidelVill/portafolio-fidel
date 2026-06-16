@@ -1,9 +1,9 @@
-"use client"
-
 "use client";
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+
+const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -27,13 +27,13 @@ export default function Button({
   target,
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 cursor-pointer";
+    "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors duration-200 cursor-pointer";
 
   const variants = {
     primary:
-      "bg-primary-500 text-dark-900 dark:text-white hover:bg-primary-600 shadow-lg shadow-primary-500/25",
+      "bg-primary-500 text-white hover:bg-primary-600 shadow-lg shadow-primary-500/25",
     outline:
-      "border border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-dark-900 dark:hover:text-white",
+      "border border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white",
     ghost:
       "text-dark-900/70 dark:text-white/70 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10",
   };
@@ -53,8 +53,9 @@ export default function Button({
         className={classes}
         target={target}
         download={download}
-        whileTap={{ scale: 0.97 }}
         whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.97 }}
+        transition={{ duration: 0.16, ease: EASE_OUT }}
       >
         {children}
       </motion.a>
@@ -65,8 +66,9 @@ export default function Button({
     <motion.button
       onClick={onClick}
       className={classes}
-      whileTap={{ scale: 0.97 }}
       whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.97 }}
+      transition={{ duration: 0.16, ease: EASE_OUT }}
     >
       {children}
     </motion.button>

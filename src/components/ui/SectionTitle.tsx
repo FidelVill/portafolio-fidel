@@ -3,44 +3,44 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
+
 interface SectionTitleProps {
+  comment: string;
   title: string;
   subtitle?: string;
-  centered?: boolean;
+  as?: "h2" | "h3";
   className?: string;
 }
 
 export default function SectionTitle({
+  comment,
   title,
   subtitle,
-  centered = true,
+  as: Tag = "h2",
   className,
 }: SectionTitleProps) {
+  const headingSize =
+    Tag === "h2"
+      ? "text-3xl md:text-4xl font-extrabold leading-tight"
+      : "text-2xl font-extrabold";
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className={cn(
-        "mb-12",
-        centered && "text-center",
-        className
-      )}
+      transition={{ duration: 0.5, ease: EASE_OUT }}
+      className={cn("mb-16", className)}
     >
-      <h2 className="text-3xl md:text-4xl font-bold text-dark-900 dark:text-white mb-4">
+      <p className="text-primary-500 font-mono text-sm mb-3">{comment}</p>
+      <Tag className={cn(headingSize, "text-dark-900 dark:text-white")}>
         {title}
         <span className="text-primary-500">.</span>
-      </h2>
+      </Tag>
       {subtitle && (
-        <p className="text-dark-900/60 dark:text-white/60 text-lg max-w-2xl mx-auto">{subtitle}</p>
+        <p className="text-dark-900/50 dark:text-white/50 mt-3 max-w-xl">{subtitle}</p>
       )}
-      <div
-        className={cn(
-          "mt-4 h-1 w-16 bg-gradient-to-r from-primary-500 to-accent rounded-full",
-          centered && "mx-auto"
-        )}
-      />
     </motion.div>
   );
 }

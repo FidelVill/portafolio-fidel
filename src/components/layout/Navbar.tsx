@@ -7,6 +7,10 @@ import { SiGithub } from "@icons-pack/react-simple-icons";
 import { FaLinkedinIn } from "react-icons/fa";
 import { useTheme } from "./ThemeProvider";
 import { cn } from "@/lib/utils";
+import { social } from "@/data/social";
+import LogoMark from "@/components/ui/LogoMark";
+
+const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 const navLinks = [
   { href: "#about", label: { es: "Sobre mí", en: "About" } },
@@ -26,17 +30,20 @@ export default function Navbar({ locale }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
+  const cvFilename = locale === "es" ? "CV_Fidel_Villegas_ES_2026.pdf" : "CV_Fidel_Villegas_EN_2026.pdf";
+  const cvHref = `/${cvFilename}`;
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <motion.nav
-      initial={{ y: -100, opacity: 0 }}
+      initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4, ease: EASE_OUT }}
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
@@ -45,16 +52,10 @@ export default function Navbar({ locale }: NavbarProps) {
       )}
     >
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
-        {/* Logo */}
-        <motion.a
-          href="#"
-          className="font-mono text-lg font-bold text-dark-900 dark:text-white"
-          whileHover={{ scale: 1.05 }}
-        >
-          <span className="text-primary-500">&lt;</span>
-          {" FV "}
-          <span className="text-primary-500">/&gt;</span>
-        </motion.a>
+        {/* Logo — no whileHover (used constantly, animation adds friction) */}
+        <a href="#" className="text-lg text-dark-900 dark:text-white hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-[150ms]">
+          <LogoMark />
+        </a>
 
         {/* Desktop Links */}
         <ul className="hidden md:flex items-center gap-8">
@@ -63,8 +64,9 @@ export default function Navbar({ locale }: NavbarProps) {
               <a
                 href={link.href}
                 onClick={() => setActive(link.href)}
+                aria-current={active === link.href ? "page" : undefined}
                 className={cn(
-                  "text-sm font-medium transition-colors duration-200",
+                  "text-sm font-medium transition-colors duration-[150ms]",
                   active === link.href
                     ? "text-primary-500"
                     : "text-dark-900/60 dark:text-white/60 hover:text-dark-900 dark:hover:text-white"
@@ -81,7 +83,7 @@ export default function Navbar({ locale }: NavbarProps) {
           {/* Lang Toggle */}
           <a
             href={locale === "es" ? "/en" : "/es"}
-            className="text-xs font-mono font-bold text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors px-2 py-1 rounded border border-dark-900/10 dark:border-white/10 hover:border-dark-900/30 dark:hover:border-white/30"
+            className="text-xs font-mono font-bold text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms] px-2 py-1 rounded border border-dark-900/10 dark:border-white/10 hover:border-dark-900/30 dark:hover:border-white/30"
           >
             {locale === "es" ? "EN" : "ES"}
           </a>
@@ -89,32 +91,37 @@ export default function Navbar({ locale }: NavbarProps) {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10 transition-all"
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            className="p-2 rounded-lg text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10 transition-colors duration-[150ms]"
           >
-            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+            {theme === "dark" ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
           </button>
 
           {/* Social */}
           <a
-            href="https://github.com/FidelVill"
+            href={social.github.url}
             target="_blank"
-            className="p-2 rounded-lg text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10 transition-all"
+            rel="noopener noreferrer"
+            aria-label={social.github.label}
+            className="p-2 rounded-lg text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10 transition-colors duration-[150ms]"
           >
-            <SiGithub size={16} />
+            <SiGithub size={16} aria-hidden="true" />
           </a>
           <a
-            href="https://linkedin.com/in/fidelvillegashernandez"
+            href={social.linkedin.url}
             target="_blank"
-            className="p-2 rounded-lg text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10 transition-all"
+            rel="noopener noreferrer"
+            aria-label={social.linkedin.label}
+            className="p-2 rounded-lg text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10 transition-colors duration-[150ms]"
           >
-            <FaLinkedinIn size={16} />
+            <FaLinkedinIn size={16} aria-hidden="true" />
           </a>
 
           {/* CV Button */}
           <a
-            href="/cv.pdf"
-            download
-            className="px-4 py-2 text-xs font-semibold bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-all"
+            href={cvHref}
+            download={cvFilename}
+            className="px-4 py-2 text-xs font-semibold bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors duration-[150ms]"
           >
             {locale === "es" ? "Descargar CV" : "Download CV"}
           </a>
@@ -123,9 +130,11 @@ export default function Navbar({ locale }: NavbarProps) {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden p-2 text-dark-900/70 dark:text-white/70 hover:text-dark-900 dark:hover:text-white"
+          aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={menuOpen}
+          className="md:hidden p-2 text-dark-900/70 dark:text-white/70 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms]"
         >
-          {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
         </button>
       </div>
 
@@ -136,6 +145,7 @@ export default function Navbar({ locale }: NavbarProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2, ease: EASE_OUT }}
             className="md:hidden bg-light-50/95 dark:bg-dark-900/95 backdrop-blur-md border-t border-dark-900/5 dark:border-white/5"
           >
             <ul className="flex flex-col px-4 py-4 gap-4">
@@ -147,22 +157,32 @@ export default function Navbar({ locale }: NavbarProps) {
                       setActive(link.href);
                       setMenuOpen(false);
                     }}
-                    className="text-sm font-medium text-dark-900/70 dark:text-white/70 hover:text-dark-900 dark:hover:text-white transition-colors"
+                    aria-current={active === link.href ? "page" : undefined}
+                    className="text-sm font-medium text-dark-900/70 dark:text-white/70 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms]"
                   >
                     {link.label[locale as "es" | "en"]}
                   </a>
                 </li>
               ))}
               <li className="flex items-center gap-3 pt-2 border-t border-dark-900/10 dark:border-white/10">
-                <a href={locale === "es" ? "/en" : "/es"}
-                  className="text-xs font-mono font-bold text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors px-2 py-1 rounded border border-dark-900/10 dark:border-white/10">
+                <a
+                  href={locale === "es" ? "/en" : "/es"}
+                  className="text-xs font-mono font-bold text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms] px-2 py-1 rounded border border-dark-900/10 dark:border-white/10"
+                >
                   {locale === "es" ? "EN" : "ES"}
                 </a>
-                <button onClick={toggleTheme} className="p-2 text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white">
-                  {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+                <button
+                  onClick={toggleTheme}
+                  aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                  className="p-2 text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms]"
+                >
+                  {theme === "dark" ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
                 </button>
-                <a href="/cv.pdf" download
-                  className="ml-auto px-4 py-2 text-xs font-semibold bg-primary-500 text-dark-900 dark:text-white rounded-lg">
+                <a
+                  href="/cv.pdf"
+                  download
+                  className="ml-auto px-4 py-2 text-xs font-semibold bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors duration-[150ms]"
+                >
                   CV
                 </a>
               </li>

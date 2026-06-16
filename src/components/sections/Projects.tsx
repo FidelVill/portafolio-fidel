@@ -4,48 +4,52 @@ import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { projects } from "@/data";
+import { social } from "@/data/social";
+import SectionTitle from "@/components/ui/SectionTitle";
+import TechTag from "@/components/ui/TechTag";
+
+const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 interface ProjectsProps {
   locale: string;
 }
 
+const statusColors: Record<string, string> = {
+  production: "bg-green-400",
+  maintenance: "bg-yellow-400",
+  development: "bg-blue-400",
+};
+
 export default function Projects({ locale }: ProjectsProps) {
   return (
     <section id="projects" className="py-24 px-4 max-w-6xl mx-auto">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="mb-16"
-      >
-        <p className="text-primary-500 font-mono text-sm mb-3">
-          {"// proyectos destacados"}
-        </p>
-        <div className="flex items-end justify-between">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-dark-900 dark:text-white">
-            {locale === "es" ? "Lo que he construido" : "What I've built"}
-            <span className="text-primary-500">.</span>
-          </h2>
-          <a
-            href="https://github.com/FidelVill"
-            target="_blank"
-            className="hidden md:flex items-center gap-2 text-dark-900/40 dark:text-white/40 hover:text-dark-900 dark:hover:text-white text-sm transition-colors"
-          >
-            <SiGithub size={16} />
-            {locale === "es" ? "Ver todos en GitHub" : "View all on GitHub"}
-          </a>
-        </div>
-      </motion.div>
+      <div className="mb-16 flex items-end justify-between">
+        <SectionTitle
+          comment="// proyectos destacados"
+          title={locale === "es" ? "Lo que he construido" : "What I've built"}
+          className="mb-0"
+        />
+        <a
+          href={social.github.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={locale === "es" ? "Ver todos los proyectos en GitHub" : "View all projects on GitHub"}
+          className="hidden md:flex items-center gap-2 text-dark-900/40 dark:text-white/40 hover:text-dark-900 dark:hover:text-white text-sm transition-colors duration-[150ms] shrink-0 ml-8"
+        >
+          <SiGithub size={16} aria-hidden="true" />
+          {locale === "es" ? "Ver todos en GitHub" : "View all on GitHub"}
+        </a>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {projects.map((project, i) => (
           <motion.div
             key={project.id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 12, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
-            className={`glass rounded-2xl overflow-hidden group hover:border-primary-500/30 transition-all duration-300 ${
+            transition={{ delay: Math.min(i * 0.05, 0.2), duration: 0.45, ease: EASE_OUT }}
+            className={`glass rounded-2xl overflow-hidden hover:border-primary-500/30 transition-colors duration-200 ${
               i === 0 ? "md:col-span-2" : ""
             }`}
           >
@@ -57,7 +61,6 @@ export default function Projects({ locale }: ProjectsProps) {
             }`} />
 
             <div className={`p-6 ${i === 0 ? "md:flex md:gap-8" : ""}`}>
-              {/* Featured badge */}
               {i === 0 && (
                 <div className="mb-4 md:mb-0 md:w-1/2">
                   <span className="text-xs font-mono text-primary-500 border border-primary-500/30 px-2 py-1 rounded-full">
@@ -84,15 +87,12 @@ export default function Projects({ locale }: ProjectsProps) {
                   </>
                 )}
 
-                {/* Status badge */}
+                {/* Status dot — ping pattern (not pulse) */}
                 <div className="flex items-center gap-2 mb-4">
-                  <span className={`w-1.5 h-1.5 rounded-full ${
-                    project.status === "production"
-                      ? "bg-green-400"
-                      : project.status === "maintenance"
-                      ? "bg-yellow-400"
-                      : "bg-blue-400"
-                  } animate-pulse`} />
+                  <span className="relative flex h-2 w-2">
+                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${statusColors[project.status] ?? "bg-blue-400"} opacity-75`} />
+                    <span className={`relative inline-flex rounded-full h-2 w-2 ${statusColors[project.status] ?? "bg-blue-400"}`} />
+                  </span>
                   <span className="text-xs text-dark-900/40 dark:text-white/40">
                     {project.status === "production"
                       ? locale === "es" ? "En producción" : "In production"
@@ -102,15 +102,10 @@ export default function Projects({ locale }: ProjectsProps) {
                   </span>
                 </div>
 
-                {/* Tech stack */}
+                {/* Tech stack — TechTag component */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="text-xs px-2 py-1 rounded-md bg-dark-900/5 dark:bg-white/5 text-dark-900/50 dark:text-white/50 border border-dark-900/10 dark:border-white/10"
-                    >
-                      {t}
-                    </span>
+                    <TechTag key={t}>{t}</TechTag>
                   ))}
                 </div>
 
@@ -120,9 +115,11 @@ export default function Projects({ locale }: ProjectsProps) {
                     <a
                       href={project.demo}
                       target="_blank"
-                      className="flex items-center gap-1.5 text-xs text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors"
+                      rel="noopener noreferrer"
+                      aria-label={`${locale === "es" ? "Ver demo de" : "Live demo of"} ${project.title}`}
+                      className="flex items-center gap-1.5 text-xs text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms]"
                     >
-                      <ExternalLink size={14} />
+                      <ExternalLink size={14} aria-hidden="true" />
                       {locale === "es" ? "Ver demo" : "Live demo"}
                     </a>
                   )}
@@ -130,9 +127,11 @@ export default function Projects({ locale }: ProjectsProps) {
                     <a
                       href={project.repo}
                       target="_blank"
-                      className="flex items-center gap-1.5 text-xs text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors"
+                      rel="noopener noreferrer"
+                      aria-label={`${locale === "es" ? "Ver código de" : "View code for"} ${project.title}`}
+                      className="flex items-center gap-1.5 text-xs text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms]"
                     >
-                      <SiGithub size={14} />
+                      <SiGithub size={14} aria-hidden="true" />
                       {locale === "es" ? "Ver código" : "View code"}
                     </a>
                   )}

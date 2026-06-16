@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { FaLinkedin } from "react-icons/fa";
+import { social } from "@/data/social";
+import LogoMark from "@/components/ui/LogoMark";
 
 interface FooterProps {
   locale: string;
@@ -14,17 +15,13 @@ export default function Footer({ locale }: FooterProps) {
   return (
     <footer className="border-t border-dark-900/5 dark:border-white/5 py-8 px-4">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-
-        {/* Logo */}
-        <motion.a
+        {/* Logo — plain anchor, no motion overhead */}
+        <a
           href="#"
-          className="font-mono text-sm font-bold text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors"
-          whileHover={{ scale: 1.05 }}
+          className="text-sm text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms]"
         >
-          <span className="text-primary-500">&lt;</span>
-          {" FV "}
-          <span className="text-primary-500">/&gt;</span>
-        </motion.a>
+          <LogoMark />
+        </a>
 
         {/* Copy */}
         <p className="text-dark-900/30 dark:text-white/30 text-xs text-center">
@@ -34,32 +31,35 @@ export default function Footer({ locale }: FooterProps) {
             : "All rights reserved"}
         </p>
 
-        {/* Socials */}
+        {/* Socials — plain anchors, motion was imported but unused here */}
         <div className="flex items-center gap-4">
-          <motion.a
-            href="https://github.com/FidelVill"
+          <a
+            href={social.github.url}
             target="_blank"
-            className="text-dark-900/30 dark:text-white/30 hover:text-dark-900 dark:hover:text-white transition-colors"
+            rel="noopener noreferrer"
+            aria-label={social.github.label}
+            className="text-dark-900/30 dark:text-white/30 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms]"
           >
-            <SiGithub size={16} />
-          </motion.a>
-          
-          <motion.a
-            href="https://linkedin.com/in/fidelvillegashernandez"
-            target="_blank"
-            className="text-dark-900/30 dark:text-white/30 hover:text-dark-900 dark:hover:text-white transition-colors"
-          >
-            <FaLinkedin size={16} />
-          </motion.a>
-          
-          <motion.a
-            href="mailto:villegas.h.del01@gmail.com"
-            className="text-dark-900/30 dark:text-white/30 hover:text-dark-900 dark:hover:text-white transition-colors text-xs font-mono"
-          >
-            villegas.h.del01@gmail.com
-          </motion.a>
-        </div>
+            <SiGithub size={16} aria-hidden="true" />
+          </a>
 
+          <a
+            href={social.linkedin.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={social.linkedin.label}
+            className="text-dark-900/30 dark:text-white/30 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms]"
+          >
+            <FaLinkedin size={16} aria-hidden="true" />
+          </a>
+
+          <a
+            href={`mailto:${social.email}`}
+            className="text-dark-900/30 dark:text-white/30 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms] text-xs font-mono"
+          >
+            {social.email}
+          </a>
+        </div>
       </div>
     </footer>
   );

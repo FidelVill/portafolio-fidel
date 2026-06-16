@@ -32,6 +32,7 @@ export default function ThemeProvider({
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
     setStoredTheme(next);
+    document.documentElement.classList.toggle("dark", next === "dark");
   };
 
   return (
