@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { Briefcase, Calendar, MapPin } from "lucide-react";
 import { experiences } from "@/data";
 import Certifications from "./Certifications";
@@ -14,6 +15,9 @@ interface ExperienceProps {
 }
 
 export default function Experience({ locale }: ExperienceProps) {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const lineInView = useInView(timelineRef, { once: true });
+
   return (
     <section id="experience" className="py-24 px-4 max-w-6xl mx-auto">
       <SectionTitle
@@ -23,8 +27,13 @@ export default function Experience({ locale }: ExperienceProps) {
 
       <div className="grid lg:grid-cols-3 gap-12">
         {/* Timeline — col-span-2 */}
-        <div className="lg:col-span-2 relative">
-          <div className="absolute left-4 top-0 bottom-0 w-px bg-dark-900/10 dark:bg-white/10" />
+        <div ref={timelineRef} className="lg:col-span-2 relative">
+          <motion.div
+            className="absolute left-4 top-0 bottom-0 w-px bg-dark-900/10 dark:bg-white/10"
+            initial={{ clipPath: "inset(0 0 100% 0 round 4px)" }}
+            animate={lineInView ? { clipPath: "inset(0 0 0% 0 round 4px)" } : undefined}
+            transition={{ duration: 1.2, ease: EASE_OUT, delay: 0.2 }}
+          />
 
           <div className="flex flex-col gap-8">
             {experiences.map((exp, i) => (
@@ -37,7 +46,13 @@ export default function Experience({ locale }: ExperienceProps) {
                 className="relative pl-12"
               >
                 {/* Timeline dot */}
-                <div className="absolute left-2.5 w-3 h-3 rounded-full bg-primary-500 border-2 border-light-50 dark:border-dark-900 mt-1.5" />
+                <motion.div
+                  className="absolute left-2.5 w-3 h-3 rounded-full bg-primary-500 border-2 border-light-50 dark:border-dark-900 mt-1.5"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ type: "spring", bounce: 0.3, delay: i * 0.1 }}
+                />
 
                 <div className="glass rounded-2xl p-6 hover:border-primary-500/20 transition-colors duration-200">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3 mb-4">

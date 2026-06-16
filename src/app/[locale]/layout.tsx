@@ -23,6 +23,10 @@ export const metadata: Metadata = {
     "Desarrollador Fullstack especializado en React, Angular, Laravel y Python. +11 deploys en producción.",
   keywords: ["Fullstack Developer", "React", "Angular", "Laravel", "Python"],
   authors: [{ name: "Fidel Villegas Hernández" }],
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
   openGraph: {
     title: "Fidel Villegas | Fullstack Developer",
     description:

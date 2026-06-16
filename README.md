@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portafolio — Fidel Villegas Hernández
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-Deploy-black?style=flat-square&logo=vercel)
 
-First, run the development server:
+## 🚀 Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+| Tecnología | Uso |
+|---|---|
+| Next.js 16 + TypeScript | Framework principal, App Router, SSR |
+| Tailwind CSS v4 | Estilos con `@theme` y variante `dark:` |
+| Framer Motion | Animaciones, spring physics, `useInView` |
+| next-intl | Internacionalización ES / EN |
+| @icons-pack/react-simple-icons | Iconos de tecnologías (GitHub, etc.) |
+| Vercel | Deploy y hosting |
+
+## ✨ Features
+
+- Diseño responsive mobile-first
+- Dark / Light mode con persistencia en `localStorage`
+- Internacionalización completa (Español / English) vía next-intl
+- Animaciones con Framer Motion — easing personalizado, spring physics, stagger
+- Contadores animados con `requestAnimationFrame` y ease-out cúbico
+- Timeline de experiencia con reveal por clip-path
+- Descarga de CV según idioma activo (ES / EN)
+- GitHub stats en tiempo real con caché de módulo
+- Formulario de contacto vía `mailto:` con estado de confirmación
+- Accesibilidad: `aria-label`, `aria-current`, `aria-expanded`, `rel="noopener noreferrer"`
+
+## 📁 Estructura del proyecto
+
+```
+src/
+├── app/[locale]/       # Rutas internacionalizadas (App Router)
+├── components/
+│   ├── layout/         # Navbar, Footer, ThemeProvider
+│   ├── sections/       # Hero, About, Skills, Experience, Projects, Contact, GithubStats
+│   └── ui/             # Button, TechTag, LogoMark, SectionTitle
+├── data/               # Proyectos, experiencia, skills, certificaciones
+├── hooks/              # useCounter
+├── i18n/               # Configuración next-intl (routing, request)
+├── lib/                # cn(), getTechColor(), theme helpers
+├── messages/           # es.json, en.json
+└── types/              # Interfaces TypeScript compartidas
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌐 Demo
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+[portafolio-fidel.vercel.app](https://portafolio-fidel.vercel.app)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📬 Contacto
 
-## Learn More
+- Email: [villegas.h.fidel01@gmail.com](mailto:villegas.h.fidel01@gmail.com)
+- LinkedIn: [linkedin.com/in/fidelvillegashernandez](https://linkedin.com/in/fidelvillegashernandez)
+- GitHub: [github.com/FidelVill](https://github.com/FidelVill)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Diseñado y desarrollado por Fidel Villegas Hernández © 2026

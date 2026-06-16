@@ -8,7 +8,7 @@ export const projects: Project[] = [
       es: "Sistema integral web y móvil para el control y monitoreo de diabetes tipo 1. Incluye agentes conversacionales con OpenAI API, registro de glucosa, emociones, ejercicio y alimentación.",
       en: "Comprehensive web and mobile system for type 1 diabetes monitoring. Includes conversational AI agents with OpenAI API, glucose tracking, emotions, exercise and nutrition logging.",
     },
-    tech: ["React", "Flutter", "Supabase", "Tailwind CSS", "OpenAI API", "Firebase", "CI/CD"],
+    tech: ["React", "Flutter", "Supabase", "Tailwind CSS", "Firebase", "CI/CD"],
     status: "production",
   },
   {
@@ -48,7 +48,7 @@ export const experiences: Experience[] = [
     id: "cantera",
     role: { es: "Desarrollador Fullstack", en: "Fullstack Developer" },
     company: "Cantera Digital",
-    period: { start: "Jun 2024", end: "Jun 2025" },
+    period: { start: "Jun 2025", end: "Jun 2026" },
     location: "Morelia, MX",
     remote: true,
     description: {
@@ -130,7 +130,7 @@ export const certifications: Certification[] = [
   {
     name: "Blip Academy — Plataformas Conversacionales",
     issuer: "Blip / Take",
-    year: "2025",
+    year: "2026",
   },
 ];
 

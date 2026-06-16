@@ -6,6 +6,7 @@ import Image from "next/image";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { GitBranch } from "lucide-react";
 import { social } from "@/data/social";
+import { useCounter } from "@/hooks/useCounter";
 
 interface GithubStatsProps {
   locale: string;
@@ -26,6 +27,9 @@ const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 export default function GithubStats({ locale }: GithubStatsProps) {
   const [stats, setStats] = useState<Stats | null>(cache);
   const [error, setError] = useState(false);
+  const reposCounter = useCounter(stats?.repos ?? 0);
+  const followersCounter = useCounter(stats?.followers ?? 0);
+  const gistsCounter = useCounter(stats?.publicGists ?? 0);
 
   useEffect(() => {
     if (fetched) {
@@ -76,18 +80,18 @@ export default function GithubStats({ locale }: GithubStatsProps) {
         </p>
       ) : stats ? (
         <div className="grid grid-cols-3 gap-4">
-          <div className="text-center">
-            <p className="text-2xl font-extrabold text-primary-500">{stats.repos}</p>
+          <div ref={reposCounter.ref} className="text-center">
+            <p className="text-2xl font-extrabold text-primary-500">{reposCounter.count}</p>
             <p className="text-dark-900/40 dark:text-white/40 text-xs mt-1">Repos</p>
           </div>
-          <div className="text-center">
-            <p className="text-2xl font-extrabold text-accent">{stats.followers}</p>
+          <div ref={followersCounter.ref} className="text-center">
+            <p className="text-2xl font-extrabold text-accent">{followersCounter.count}</p>
             <p className="text-dark-900/40 dark:text-white/40 text-xs mt-1">
               {locale === "es" ? "Seguidores" : "Followers"}
             </p>
           </div>
-          <div className="text-center">
-            <p className="text-2xl font-extrabold text-green-500">{stats.publicGists}</p>
+          <div ref={gistsCounter.ref} className="text-center">
+            <p className="text-2xl font-extrabold text-green-500">{gistsCounter.count}</p>
             <p className="text-dark-900/40 dark:text-white/40 text-xs mt-1">Gists</p>
           </div>
         </div>

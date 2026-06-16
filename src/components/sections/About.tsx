@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { GraduationCap, MapPin, Languages, Award } from "lucide-react";
 import SectionTitle from "@/components/ui/SectionTitle";
+import { useCounter } from "@/hooks/useCounter";
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
@@ -11,6 +12,12 @@ interface AboutProps {
 }
 
 export default function About({ locale }: AboutProps) {
+  const c0 = useCounter(2);
+  const c1 = useCounter(11);
+  const c2 = useCounter(5);
+  const c3 = useCounter(1);
+  const counters = [c0, c1, c2, c3];
+
   const cards = [
     {
       icon: <GraduationCap size={18} aria-hidden="true" />,
@@ -80,20 +87,21 @@ export default function About({ locale }: AboutProps) {
           {/* Stats grid */}
           <div className="grid grid-cols-2 gap-3">
             {[
-              { value: "2+", label: locale === "es" ? "Años de experiencia" : "Years experience", color: "text-primary-500" },
-              { value: "11+", label: locale === "es" ? "Deploys en producción" : "Production deploys", color: "text-accent" },
-              { value: "5+", label: locale === "es" ? "Proyectos reales" : "Real projects", color: "text-green-400" },
-              { value: "1", label: locale === "es" ? "Ponencia nacional" : "National talk", color: "text-purple-400" },
+              { suffix: "+", label: locale === "es" ? "Años de experiencia" : "Years experience", color: "text-primary-500" },
+              { suffix: "+", label: locale === "es" ? "Deploys en producción" : "Production deploys", color: "text-accent" },
+              { suffix: "+", label: locale === "es" ? "Proyectos reales" : "Real projects", color: "text-green-400" },
+              { suffix: "", label: locale === "es" ? "Ponencia nacional" : "National talk", color: "text-purple-400" },
             ].map((stat, i) => (
               <motion.div
                 key={i}
+                ref={counters[i].ref}
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: Math.min(i * 0.05, 0.2), duration: 0.45, ease: EASE_OUT }}
                 className="glass rounded-xl p-4 text-center"
               >
-                <p className={`text-3xl font-extrabold ${stat.color}`}>{stat.value}</p>
+                <p className={`text-3xl font-extrabold ${stat.color}`}>{counters[i].count}{stat.suffix}</p>
                 <p className="text-dark-900/40 dark:text-white/40 text-xs mt-1">{stat.label}</p>
               </motion.div>
             ))}

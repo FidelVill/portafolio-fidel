@@ -7,6 +7,7 @@ import { projects } from "@/data";
 import { social } from "@/data/social";
 import SectionTitle from "@/components/ui/SectionTitle";
 import TechTag from "@/components/ui/TechTag";
+import { getTechColor } from "@/lib/utils";
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
@@ -54,11 +55,11 @@ export default function Projects({ locale }: ProjectsProps) {
             }`}
           >
             {/* Top color bar */}
-            <div className={`h-1 w-full ${
-              i === 0
-                ? "bg-gradient-to-r from-primary-500 to-accent"
-                : "bg-dark-900/5 dark:bg-white/5"
-            }`} />
+            {i === 0 ? (
+              <div className="h-px w-full animate-shimmer" />
+            ) : (
+              <div className="h-1 w-full bg-dark-900/5 dark:bg-white/5" />
+            )}
 
             <div className={`p-6 ${i === 0 ? "md:flex md:gap-8" : ""}`}>
               {i === 0 && (
@@ -66,7 +67,7 @@ export default function Projects({ locale }: ProjectsProps) {
                   <span className="text-xs font-mono text-primary-500 border border-primary-500/30 px-2 py-1 rounded-full">
                     {locale === "es" ? "// Proyecto destacado" : "// Featured project"}
                   </span>
-                  <h3 className="text-dark-900 dark:text-white font-bold text-2xl mt-3 mb-3">
+                  <h3 className="gradient-text font-bold text-3xl mt-3 mb-3">
                     {project.title}
                   </h3>
                   <p className="text-dark-900/60 dark:text-white/60 text-sm leading-relaxed">
@@ -105,7 +106,7 @@ export default function Projects({ locale }: ProjectsProps) {
                 {/* Tech stack — TechTag component */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tech.map((t) => (
-                    <TechTag key={t}>{t}</TechTag>
+                    <TechTag key={t} className={i === 0 ? getTechColor(t) : undefined}>{t}</TechTag>
                   ))}
                 </div>
 
