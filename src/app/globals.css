@@ -12,6 +12,10 @@
   --color-dark-700: #334155;
   --color-dark-600: #475569;
   --color-accent: #06B6D4;
+  --color-violet-500: #8B5CF6;
+  --color-violet-600: #7C3AED;
+  --color-cyan-bright: #00F5FF;
+  --color-electric: #2563EB;
 
   --color-light-50: #ffffff;
   --color-light-100: #f8fafc;
@@ -43,6 +47,16 @@
     0% { background-position: 200% center; }
     100% { background-position: -200% center; }
   }
+
+  @keyframes orbit-spin {
+    from { rotate: 0deg; }
+    to   { rotate: 360deg; }
+  }
+
+  @keyframes orbit-counter {
+    from { rotate: 0deg; }
+    to   { rotate: -360deg; }
+  }
 }
 
 html {
@@ -71,7 +85,7 @@ body {
 
 @layer utilities {
   .gradient-text {
-    @apply bg-gradient-to-r from-primary-500 to-accent bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-electric via-primary-500 to-violet-500 bg-clip-text text-transparent;
   }
 
   .glass {

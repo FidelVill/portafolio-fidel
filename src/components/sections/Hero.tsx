@@ -1,24 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowDown, MapPin, Download } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 import { social } from "@/data/social";
-
-const roles = [
-  "Fullstack Developer",
-  "Web & Mobile Dev",
-  "AI Integrations",
-  "Open to Work",
-];
+import TechOrbit from "@/components/ui/TechOrbit";
 
 // Emil's strong ease-out — far more intentional than the built-in CSS easings
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
@@ -43,61 +32,49 @@ interface HeroProps {
 }
 
 export default function Hero({ locale }: HeroProps) {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [deleting, setDeleting] = useState(false);
+  const [bootLines, setBootLines] = useState<string[]>([]);
+
+  const bootSequence = locale === "es"
+    ? [
+        "> Inicializando perfil...",
+        "✓ Laravel",
+        "✓ Angular",
+        "✓ React / Next.js",
+        "✓ Python / Flask",
+        "✓ Docker / Azure",
+        "✓ OpenAI · Gemini · Blip",
+        "Estado: Disponible para construir.",
+        "● Disponible para trabajar",
+      ]
+    : [
+        "> Initializing profile...",
+        "✓ Laravel",
+        "✓ Angular",
+        "✓ React / Next.js",
+        "✓ Python / Flask",
+        "✓ Docker / Azure",
+        "✓ OpenAI · Gemini · Blip",
+        "Status: Available to build.",
+        "● Available to work",
+      ];
 
   const cvFilename = locale === "es" ? "CV_Fidel_Villegas_ES_2026.pdf" : "CV_Fidel_Villegas_EN_2026.pdf";
   const cvHref = `/${cvFilename}`;
 
-  // Mouse-tracking spring tilt for the photo card (decorative — Emil's useSpring pattern)
-  const cardRef = useRef<HTMLDivElement>(null);
-  const rawX = useMotionValue(0);
-  const rawY = useMotionValue(0);
-  const rotateY = useSpring(useTransform(rawX, [-0.5, 0.5], [-10, 10]), {
-    stiffness: 150,
-    damping: 20,
-  });
-  const rotateX = useSpring(useTransform(rawY, [-0.5, 0.5], [10, -10]), {
-    stiffness: 150,
-    damping: 20,
-  });
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    rawX.set((e.clientX - rect.left) / rect.width - 0.5);
-    rawY.set((e.clientY - rect.top) / rect.height - 0.5);
-  }
-
-  function handleMouseLeave() {
-    rawX.set(0);
-    rawY.set(0);
-  }
-
   useEffect(() => {
-    const current = roles[roleIndex];
-    let timeout: NodeJS.Timeout;
-
-    if (!deleting && displayed.length < current.length) {
-      timeout = setTimeout(
-        () => setDisplayed(current.slice(0, displayed.length + 1)),
-        80
-      );
-    } else if (!deleting && displayed.length === current.length) {
-      timeout = setTimeout(() => setDeleting(true), 2000);
-    } else if (deleting && displayed.length > 0) {
-      timeout = setTimeout(
-        () => setDisplayed(current.slice(0, displayed.length - 1)),
-        40
-      );
-    } else if (deleting && displayed.length === 0) {
-      setDeleting(false);
-      setRoleIndex((prev) => (prev + 1) % roles.length);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayed, deleting, roleIndex]);
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < bootSequence.length) {
+        const line = bootSequence[i];
+        i++;
+        setBootLines((prev) => [...prev, line]);
+      } else {
+        clearInterval(interval);
+      }
+    }, 400);
+    return () => clearInterval(interval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <section className="min-h-screen flex flex-col justify-center px-4 pt-20 max-w-6xl mx-auto">
@@ -110,46 +87,49 @@ export default function Hero({ locale }: HeroProps) {
           initial="hidden"
           animate="visible"
         >
-          {/* Open to work badge */}
-          <motion.div
-            variants={itemVariants}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-medium mb-6"
-          >
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400" />
-            </span>
-            {locale === "es" ? "Disponible para trabajar" : "Open to work"}
-          </motion.div>
-
           {/* Name */}
           <motion.h1
             variants={itemVariants}
-            className="text-4xl md:text-6xl font-extrabold text-dark-900 dark:text-white mb-3 leading-tight tracking-tight"
+            className="text-3xl md:text-5xl font-extrabold text-dark-900 dark:text-white mb-4 leading-tight tracking-tight"
           >
-            {locale === "es" ? "Hola, soy" : "Hi, I'm"}
-            <br />
+            {locale === "es" ? "Hola, soy " : "Hi, I'm "}
             <span className="gradient-text">Fidel Villegas</span>
           </motion.h1>
 
-          {/* Typing effect — aria-live off prevents screen reader reading each keystroke */}
+          {/* Boot terminal */}
           <motion.div
             variants={itemVariants}
-            className="flex items-center gap-1 mb-6 h-8"
-            aria-live="off"
-            aria-label={roles[roleIndex]}
+            className="mb-4 font-mono text-sm bg-dark-900/80 dark:bg-dark-900/90 backdrop-blur-sm rounded-lg p-4 border border-dark-700/50 max-w-sm"
+            aria-live="polite"
+            aria-label="Stack tecnológico"
           >
-            <span className="text-accent font-mono text-lg select-none" aria-hidden="true">$</span>
-            <span className="font-mono text-dark-900/70 dark:text-white/70 text-lg ml-1" aria-hidden="true">
-              {displayed}
-            </span>
-            <span className="w-0.5 h-5 bg-accent ml-0.5 animate-[blink_1s_step-end_infinite]" aria-hidden="true" />
+            <div className="space-y-0.5">
+              {bootLines.map((line, i) =>
+                line?.startsWith("●") ? (
+                  <div key={i}>
+                    <span className="text-green-400">●</span>
+                    <span className="text-green-400/80">{line.slice(1)}</span>
+                  </div>
+                ) : (
+                  <div
+                    key={i}
+                    className={line?.startsWith("✓") ? "text-[#00F5FF]" : "text-white/70"}
+                  >
+                    {line}
+                  </div>
+                )
+              )}
+              <span
+                className="w-0.5 h-4 bg-[#00F5FF] inline-block animate-[blink_1s_step-end_infinite]"
+                aria-hidden="true"
+              />
+            </div>
           </motion.div>
 
           {/* Description */}
           <motion.p
             variants={itemVariants}
-            className="text-dark-900/60 dark:text-white/60 text-base leading-relaxed mb-6 max-w-md"
+            className="text-dark-900/60 dark:text-white/60 text-base leading-relaxed mb-4 max-w-md"
           >
             {locale === "es"
               ? "Desarrollo aplicaciones web y móviles de alto rendimiento con integración de IA. +11 despliegues en producción."
@@ -159,14 +139,14 @@ export default function Hero({ locale }: HeroProps) {
           {/* Location */}
           <motion.div
             variants={itemVariants}
-            className="flex items-center gap-1.5 text-dark-900/40 dark:text-white/40 text-sm mb-8"
+            className="flex items-center gap-1.5 text-dark-900/40 dark:text-white/40 text-sm mb-6"
           >
             <MapPin size={14} aria-hidden="true" />
             <span>Morelia, Michoacán, México</span>
           </motion.div>
 
           {/* CTAs — scale on hover AND press (Emil: buttons must feel responsive) */}
-          <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mb-8">
+          <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mb-6">
             <motion.a
               href="#projects"
               whileHover={{ scale: 1.03 }}
@@ -226,66 +206,59 @@ export default function Hero({ locale }: HeroProps) {
           </motion.div>
         </motion.div>
 
-        {/* Right — Photo with mouse-tracking tilt */}
+        {/* Right — Photo with orbital ring */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.6, ease: EASE_OUT }}
           className="order-1 md:order-2 flex justify-center"
         >
-          {/* Perspective wrapper — CSS property goes on parent */}
-          <div style={{ perspective: "900px" }}>
-            <motion.div
-              ref={cardRef}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              style={{ rotateX, rotateY }}
-              className="relative"
+          <div className="relative flex items-center justify-center w-full max-w-[300px] aspect-square">
+
+            {/* Glow behind photo */}
+            <div className="absolute inset-0 rounded-full bg-primary-500/20 blur-3xl scale-110" />
+
+            {/* TechOrbit — fills the container, icons orbit around its center */}
+            <TechOrbit className="absolute inset-0" />
+
+            {/* Photo — circular, centered, sits above the ring */}
+            <div
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-60 h-60 rounded-full overflow-hidden border-2 border-primary-500/40 z-10"
+              style={{ boxShadow: "0 0 40px rgba(26,86,219,0.3), 0 0 80px rgba(139,92,246,0.15)" }}
             >
-              {/* Dual-color animated glow for depth */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary-500/25 via-accent/15 to-primary-500/10 blur-3xl scale-125 animate-pulse" />
+              <Image
+                src="/foto_perfil.png"
+                alt="Fidel Villegas"
+                fill
+                sizes="240px"
+                className="object-cover object-top"
+                priority
+              />
+            </div>
 
-              {/* Photo frame */}
-              <div className="relative w-72 h-72 md:w-80 md:h-80 rounded-2xl overflow-hidden border border-dark-900/10 dark:border-white/10 shadow-2xl shadow-primary-500/10">
-                {/* Subtle vignette for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-900/25 via-transparent to-transparent z-10 pointer-events-none" />
-                <Image
-                  src="/foto_perfil.png"
-                  alt="Fidel Villegas"
-                  fill
-                  sizes="(max-width: 768px) 288px, 320px"
-                  className="object-cover object-top"
-                  priority
-                />
-              </div>
-
-              {/* Spring entrance — no artificial y oscillation */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.85, y: 8 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 0.65, type: "spring", duration: 0.5, bounce: 0.25 }}
-                className="absolute -bottom-4 -left-4 glass rounded-xl px-4 py-2 flex items-center gap-2 shadow-lg"
-              >
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-400" />
-                </span>
-                <span className="text-dark-900 dark:text-white text-xs font-medium">
-                  {locale === "es" ? "Disponible" : "Available"}
-                </span>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.85, y: -8 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 0.8, type: "spring", duration: 0.5, bounce: 0.25 }}
-                className="absolute -top-4 -right-4 glass rounded-xl px-4 py-2 shadow-lg"
-              >
-                <span className="text-dark-900/70 dark:text-white/70 text-xs font-mono">
-                  Fullstack + AI
-                </span>
-              </motion.div>
+            {/* Badge — Disponible */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 3 }}
+              className="absolute bottom-2 left-2 z-20 glass rounded-xl px-4 py-2 flex items-center gap-2"
+            >
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-dark-900 dark:text-white text-xs font-medium">
+                {locale === "es" ? "Disponible" : "Available"}
+              </span>
             </motion.div>
+
+            {/* Badge — Fullstack + AI */}
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ repeat: Infinity, duration: 3, delay: 1 }}
+              className="absolute top-2 right-2 z-20 glass rounded-xl px-4 py-2"
+            >
+              <span className="text-dark-900/70 dark:text-white/70 text-xs font-mono">
+                Fullstack + AI
+              </span>
+            </motion.div>
+
           </div>
         </motion.div>
 

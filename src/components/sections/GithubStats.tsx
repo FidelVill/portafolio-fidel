@@ -18,42 +18,53 @@ interface Stats {
   publicGists: number;
 }
 
-// Module-level cache — survives re-mounts, prevents redundant fetches
-let cache: Stats | null = null;
-let fetched = false;
+const CACHE_TTL = 3_600_000; // 1 hour in ms
+
+interface CacheEntry {
+  data: Stats;
+  timestamp: number;
+}
+
+// Module-level cache — survives re-mounts, resets after TTL
+let cache: CacheEntry | null = null;
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 export default function GithubStats({ locale }: GithubStatsProps) {
-  const [stats, setStats] = useState<Stats | null>(cache);
+  const [stats, setStats] = useState<Stats | null>(cache?.data ?? null);
   const [error, setError] = useState(false);
   const reposCounter = useCounter(stats?.repos ?? 0);
   const followersCounter = useCounter(stats?.followers ?? 0);
   const gistsCounter = useCounter(stats?.publicGists ?? 0);
 
   useEffect(() => {
-    if (fetched) {
-      if (cache) setStats(cache);
+    // Serve from cache if still fresh
+    if (cache && Date.now() - cache.timestamp < CACHE_TTL) {
+      setStats(cache.data);
       return;
     }
 
-    fetched = true;
     fetch("https://api.github.com/users/FidelVill")
       .then((res) => {
         if (!res.ok) throw new Error(`${res.status}`);
         return res.json();
       })
       .then((data) => {
-        cache = {
+        const fresh: Stats = {
           repos: data.public_repos ?? 0,
           followers: data.followers ?? 0,
           publicGists: data.public_gists ?? 0,
         };
-        setStats(cache);
+        cache = { data: fresh, timestamp: Date.now() };
+        setStats(fresh);
       })
-      .catch(() => {
-        fetched = false; // allow retry on next mount
-        setError(true);
+      .catch((err: Error) => {
+        // On rate-limit (403) keep stale cache if available rather than showing error
+        if (err.message === "403" && cache) {
+          setStats(cache.data);
+        } else {
+          setError(true);
+        }
       });
   }, []);
 

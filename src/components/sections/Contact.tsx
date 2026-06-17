@@ -31,7 +31,7 @@ export default function Contact({ locale }: ContactProps) {
   };
 
   const inputClass =
-    "w-full bg-dark-900/5 dark:bg-white/5 border border-dark-900/10 dark:border-white/10 rounded-lg px-4 py-3 text-dark-900 dark:text-white text-sm placeholder:text-dark-900/20 dark:placeholder:text-white/20 focus:outline-none focus:border-primary-500/50 transition-colors duration-[150ms]";
+    "w-full bg-dark-900/5 dark:bg-white/5 border border-dark-900/10 dark:border-white/10 rounded-lg px-4 py-3 text-dark-900 dark:text-white text-sm placeholder:text-dark-900/20 dark:placeholder:text-white/20 focus:outline-none focus:border-primary-500/50 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-none transition-colors duration-[150ms]";
 
   const labelClass =
     "block text-xs text-dark-900/40 dark:text-white/40 mb-2 font-medium";

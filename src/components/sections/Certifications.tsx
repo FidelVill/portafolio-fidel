@@ -54,8 +54,8 @@ export default function Certifications({ locale }: CertificationsProps) {
           transition={{ delay: Math.min(certifications.length * 0.05, 0.2), duration: 0.45, ease: EASE_OUT }}
           className="glass rounded-xl p-4 flex items-start gap-3 border border-purple-500/20 hover:border-purple-500/40 transition-colors duration-200"
         >
-          <div className="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0" aria-hidden="true">
-            🎓
+          <div className="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0">
+            <span role="img" aria-label={locale === "es" ? "Reconocimiento académico" : "Academic recognition"}>🎓</span>
           </div>
           <div className="flex-1">
             <p className="text-dark-900 dark:text-white text-sm font-semibold leading-tight">
