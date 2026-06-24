@@ -5,6 +5,7 @@ import { Award } from "lucide-react";
 import { certifications } from "@/data";
 import GithubStats from "./GithubStats";
 import SectionTitle from "@/components/ui/SectionTitle";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
@@ -13,11 +14,12 @@ interface CertificationsProps {
 }
 
 export default function Certifications({ locale }: CertificationsProps) {
+  const { ref, isVisible } = useScrollReveal<HTMLDivElement>({ threshold: 0.05 });
+
   return (
-    <div className="flex flex-col gap-6">
+    <div ref={ref} className="flex flex-col gap-6">
       <SectionTitle
         as="h3"
-        comment="// certificaciones"
         title={locale === "es" ? "Formación" : "Education"}
         className="mb-4"
       />
@@ -26,10 +28,9 @@ export default function Certifications({ locale }: CertificationsProps) {
         {certifications.map((cert, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: Math.min(i * 0.05, 0.2), duration: 0.45, ease: EASE_OUT }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 16 }}
+            transition={{ delay: isVisible ? i * 0.08 : 0, duration: 0.4, ease: EASE_OUT }}
             className="glass rounded-xl p-4 flex items-start gap-3 hover:border-primary-500/30 transition-colors duration-200"
           >
             <div className="w-9 h-9 rounded-lg bg-primary-500/10 flex items-center justify-center text-primary-500 shrink-0">
@@ -48,13 +49,12 @@ export default function Certifications({ locale }: CertificationsProps) {
 
         {/* Speaker recognition */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: Math.min(certifications.length * 0.05, 0.2), duration: 0.45, ease: EASE_OUT }}
-          className="glass rounded-xl p-4 flex items-start gap-3 border border-purple-500/20 hover:border-purple-500/40 transition-colors duration-200"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 16 }}
+          transition={{ delay: isVisible ? certifications.length * 0.08 : 0, duration: 0.4, ease: EASE_OUT }}
+          className="glass rounded-xl p-4 flex items-start gap-3 border border-accent/20 hover:border-accent/40 transition-colors duration-200"
         >
-          <div className="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400 shrink-0">
+          <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center text-accent shrink-0">
             <span role="img" aria-label={locale === "es" ? "Reconocimiento académico" : "Academic recognition"}>🎓</span>
           </div>
           <div className="flex-1">

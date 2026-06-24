@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { FaLinkedinIn } from "react-icons/fa";
+import LinkedinIcon from "@/components/ui/LinkedinIcon";
 import { useTheme } from "./ThemeProvider";
 import { cn } from "@/lib/utils";
 import { social } from "@/data/social";
@@ -39,6 +39,23 @@ export default function Navbar({ locale }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Active section via Intersection Observer
+  useEffect(() => {
+    const ids = navLinks.map((l) => l.href.slice(1));
+    const observers: IntersectionObserver[] = [];
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActive(`#${id}`); },
+        { rootMargin: "-20% 0px -70% 0px" }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
   return (
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
@@ -66,9 +83,9 @@ export default function Navbar({ locale }: NavbarProps) {
                 onClick={() => setActive(link.href)}
                 aria-current={active === link.href ? "page" : undefined}
                 className={cn(
-                  "text-sm font-medium transition-colors duration-[150ms]",
+                  "text-sm font-medium transition-all duration-[150ms]",
                   active === link.href
-                    ? "text-primary-500"
+                    ? "text-accent underline underline-offset-4 decoration-accent/40"
                     : "text-dark-900/60 dark:text-white/60 hover:text-dark-900 dark:hover:text-white"
                 )}
               >
@@ -114,7 +131,7 @@ export default function Navbar({ locale }: NavbarProps) {
             aria-label={social.linkedin.label}
             className="p-2 rounded-lg text-dark-900/50 dark:text-white/50 hover:text-dark-900 dark:hover:text-white hover:bg-dark-900/10 dark:hover:bg-white/10 transition-colors duration-[150ms]"
           >
-            <FaLinkedinIn size={16} aria-hidden="true" />
+            <LinkedinIcon size={16} />
           </a>
 
           {/* CV Button */}

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 interface SectionTitleProps {
-  comment: string;
+  comment?: string;
   title: string;
   subtitle?: string;
   as?: "h2" | "h3";
@@ -33,10 +33,11 @@ export default function SectionTitle({
       transition={{ duration: 0.5, ease: EASE_OUT }}
       className={cn("mb-16", className)}
     >
-      <p className="text-primary-500 font-mono text-sm mb-3">{comment}</p>
+      {comment && (
+        <p className="text-accent font-mono text-xs mb-3 tracking-wide">{comment}</p>
+      )}
       <Tag className={cn(headingSize, "text-dark-900 dark:text-white")}>
         {title}
-        <span className="text-primary-500">.</span>
       </Tag>
       {subtitle && (
         <p className="text-dark-900/50 dark:text-white/50 mt-3 max-w-xl">{subtitle}</p>

@@ -8,6 +8,7 @@ import { social } from "@/data/social";
 import SectionTitle from "@/components/ui/SectionTitle";
 import TechTag from "@/components/ui/TechTag";
 import { getTechColor } from "@/lib/utils";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
@@ -22,11 +23,12 @@ const statusColors: Record<string, string> = {
 };
 
 export default function Projects({ locale }: ProjectsProps) {
+  const { ref, isVisible } = useScrollReveal<HTMLElement>({ threshold: 0.05 });
+
   return (
-    <section id="projects" className="py-24 px-4 max-w-6xl mx-auto">
+    <section ref={ref} id="projects" className="py-24 px-4 max-w-6xl mx-auto">
       <div className="mb-16 flex items-end justify-between">
         <SectionTitle
-          comment="// proyectos destacados"
           title={locale === "es" ? "Lo que he construido" : "What I've built"}
           className="mb-0"
         />
@@ -46,17 +48,15 @@ export default function Projects({ locale }: ProjectsProps) {
         {projects.map((project, i) => (
           <motion.div
             key={project.id}
-            initial={{ opacity: 0, y: 12, scale: 0.98 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: Math.min(i * 0.05, 0.2), duration: 0.45, ease: EASE_OUT }}
-            className={`glass rounded-2xl overflow-hidden hover:border-primary-500/30 transition-colors duration-200 ${
-              i === 0 ? "md:col-span-2" : ""
-            }`}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.95 }}
+            transition={{ delay: isVisible ? Math.min(i * 0.08, 0.24) : 0, duration: 0.45, ease: EASE_OUT }}
+            className={`glass rounded-2xl overflow-hidden hover:border-primary-500/30 transition-colors duration-200 ${i === 0 ? "md:col-span-2" : ""
+              }`}
           >
             {/* Top color bar */}
             {i === 0 ? (
-              <div className="h-px w-full animate-shimmer" />
+              <div className="h-px w-full bg-accent/30" />
             ) : (
               <div className="h-1 w-full bg-dark-900/5 dark:bg-white/5" />
             )}
@@ -64,10 +64,7 @@ export default function Projects({ locale }: ProjectsProps) {
             <div className={`p-6 ${i === 0 ? "md:flex md:gap-8" : ""}`}>
               {i === 0 && (
                 <div className="mb-4 md:mb-0 md:w-1/2">
-                  <span className="text-xs font-mono text-primary-500 border border-primary-500/30 px-2 py-1 rounded-full">
-                    {locale === "es" ? "// Proyecto destacado" : "// Featured project"}
-                  </span>
-                  <h3 className="gradient-text font-bold text-3xl mt-3 mb-3">
+                  <h3 className="text-accent font-bold text-3xl mb-3">
                     {project.title}
                   </h3>
                   <p className="text-dark-900/60 dark:text-white/60 text-sm leading-relaxed">
@@ -88,18 +85,15 @@ export default function Projects({ locale }: ProjectsProps) {
                   </>
                 )}
 
-                {/* Status dot — ping pattern (not pulse) */}
+                {/* Status dot */}
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="relative flex h-2 w-2">
-                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${statusColors[project.status] ?? "bg-blue-400"} opacity-75`} />
-                    <span className={`relative inline-flex rounded-full h-2 w-2 ${statusColors[project.status] ?? "bg-blue-400"}`} />
-                  </span>
+                  <span className={`inline-flex rounded-full h-2 w-2 ${statusColors[project.status] ?? "bg-blue-400"}`} />
                   <span className="text-xs text-dark-900/40 dark:text-white/40">
                     {project.status === "production"
                       ? locale === "es" ? "En producción" : "In production"
                       : project.status === "maintenance"
-                      ? locale === "es" ? "En mantenimiento" : "In maintenance"
-                      : locale === "es" ? "En desarrollo" : "In development"}
+                        ? locale === "es" ? "En mantenimiento" : "In maintenance"
+                        : locale === "es" ? "En desarrollo" : "In development"}
                   </span>
                 </div>
 

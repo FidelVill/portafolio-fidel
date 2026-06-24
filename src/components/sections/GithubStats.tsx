@@ -25,22 +25,35 @@ interface CacheEntry {
   timestamp: number;
 }
 
-// Module-level cache — survives re-mounts, resets after TTL
+// Module-level cache — survives re-mounts within a session
 let cache: CacheEntry | null = null;
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
+const EMPTY: Stats = { repos: 0, followers: 0, publicGists: 0 };
+
+function isFresh(entry: CacheEntry): boolean {
+  return Date.now() - entry.timestamp < CACHE_TTL;
+}
+
+function hasData(s: Stats): boolean {
+  return s.repos > 0 || s.followers > 0 || s.publicGists > 0;
+}
+
 export default function GithubStats({ locale }: GithubStatsProps) {
-  const [stats, setStats] = useState<Stats | null>(cache?.data ?? null);
+  const [stats, setStats] = useState<Stats>(EMPTY);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const reposCounter = useCounter(stats?.repos ?? 0);
-  const followersCounter = useCounter(stats?.followers ?? 0);
-  const gistsCounter = useCounter(stats?.publicGists ?? 0);
+
+  const reposCounter = useCounter(stats.repos);
+  const followersCounter = useCounter(stats.followers);
+  const gistsCounter = useCounter(stats.publicGists);
 
   useEffect(() => {
-    // Serve from cache if still fresh
-    if (cache && Date.now() - cache.timestamp < CACHE_TTL) {
+    // Serve fresh cache immediately — no network call needed
+    if (cache && isFresh(cache) && hasData(cache.data)) {
       setStats(cache.data);
+      setLoading(false);
       return;
     }
 
@@ -50,19 +63,31 @@ export default function GithubStats({ locale }: GithubStatsProps) {
         return res.json();
       })
       .then((data) => {
+        console.log("GitHub API response:", data);
+
         const fresh: Stats = {
           repos: data.public_repos ?? 0,
           followers: data.followers ?? 0,
           publicGists: data.public_gists ?? 0,
         };
-        cache = { data: fresh, timestamp: Date.now() };
+
+        // Only cache if the API actually returned real data
+        if (hasData(fresh)) {
+          cache = { data: fresh, timestamp: Date.now() };
+        }
+
         setStats(fresh);
+        setLoading(false);
       })
       .catch((err: Error) => {
-        // On rate-limit (403) keep stale cache if available rather than showing error
-        if (err.message === "403" && cache) {
+        console.error("GitHub API error:", err.message);
+
+        // On rate-limit, surface stale cache rather than error
+        if (err.message === "403" && cache && hasData(cache.data)) {
           setStats(cache.data);
+          setLoading(false);
         } else {
+          setLoading(false);
           setError(true);
         }
       });
@@ -86,10 +111,19 @@ export default function GithubStats({ locale }: GithubStatsProps) {
       {error ? (
         <p className="text-dark-900/40 dark:text-white/40 text-xs text-center py-4">
           {locale === "es"
-            ? "No se pudieron cargar las estadísticas."
-            : "Could not load stats."}
+            ? "Stats temporalmente no disponibles."
+            : "Stats temporarily unavailable."}
         </p>
-      ) : stats ? (
+      ) : loading ? (
+        <div className="grid grid-cols-3 gap-4 animate-pulse">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="text-center">
+              <div className="h-8 bg-dark-900/10 dark:bg-white/10 rounded mb-1" />
+              <div className="h-3 bg-dark-900/10 dark:bg-white/10 rounded w-12 mx-auto" />
+            </div>
+          ))}
+        </div>
+      ) : (
         <div className="grid grid-cols-3 gap-4">
           <div ref={reposCounter.ref} className="text-center">
             <p className="text-2xl font-extrabold text-primary-500">{reposCounter.count}</p>
@@ -106,21 +140,12 @@ export default function GithubStats({ locale }: GithubStatsProps) {
             <p className="text-dark-900/40 dark:text-white/40 text-xs mt-1">Gists</p>
           </div>
         </div>
-      ) : (
-        <div className="grid grid-cols-3 gap-4 animate-pulse">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="text-center">
-              <div className="h-8 bg-dark-900/10 dark:bg-white/10 rounded mb-1" />
-              <div className="h-3 bg-dark-900/10 dark:bg-white/10 rounded w-12 mx-auto" />
-            </div>
-          ))}
-        </div>
       )}
 
-      {/* Contribution graph — next/image with explicit size for no CLS */}
+      {/* Contribution graph */}
       <div className="mt-4 overflow-hidden rounded-lg">
         <Image
-          src="https://ghchart.rshah.org/1A56DB/FidelVill"
+          src="https://ghchart.rshah.org/7C3AED/FidelVill"
           alt={locale === "es" ? "Gráfica de contribuciones de GitHub" : "GitHub contributions graph"}
           width={800}
           height={128}

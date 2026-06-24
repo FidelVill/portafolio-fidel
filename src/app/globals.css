@@ -2,28 +2,25 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 @theme {
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-500: #1A56DB;
-  --color-primary-600: #1e40af;
-  --color-primary-700: #1d4ed8;
-  --color-dark-900: #0F172A;
-  --color-dark-800: #1E293B;
-  --color-dark-700: #334155;
-  --color-dark-600: #475569;
-  --color-accent: #06B6D4;
-  --color-violet-500: #8B5CF6;
-  --color-violet-600: #7C3AED;
-  --color-cyan-bright: #00F5FF;
-  --color-electric: #2563EB;
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-500: #7C3AED;
+  --color-primary-600: #6D28D9;
+  --color-primary-700: #5B21B6;
+  --color-dark-900: #0a0a0a;
+  --color-dark-800: #111111;
+  --color-dark-700: #1a1a1a;
+  --color-dark-600: #222222;
+  --color-accent: #7C3AED;
+  --color-accent-light: #A78BFA;
 
-  --color-light-50: #ffffff;
-  --color-light-100: #f8fafc;
-  --color-light-200: #e2e8f0;
-  --color-light-300: #cbd5e1;
+  --color-light-50: #F8F8F8;
+  --color-light-100: #f1f1f1;
+  --color-light-200: #e0e0e0;
+  --color-light-300: #cccccc;
 
-  --font-sans: var(--font-inter), sans-serif;
-  --font-mono: var(--font-fira-code), monospace;
+  --font-sans: var(--font-geist), sans-serif;
+  --font-mono: var(--font-geist-mono), var(--font-fira-code), monospace;
 
   --animate-fade-in: fadeIn 0.5s ease-in-out;
   --animate-slide-up: slideUp 0.5s ease-out;
@@ -65,41 +62,28 @@ html {
 
 body {
   @apply bg-light-50 text-dark-900 dark:bg-dark-900 dark:text-white antialiased transition-colors duration-300;
-  background-image:
-    radial-gradient(ellipse at top left, #1A56DB05 0%, transparent 50%),
-    radial-gradient(ellipse at bottom right, #06B6D405 0%, transparent 50%);
-}
-
-.dark body {
-  background-image:
-    radial-gradient(ellipse at top left, #1A56DB08 0%, transparent 50%),
-    radial-gradient(ellipse at bottom right, #06B6D408 0%, transparent 50%);
 }
 
 
 
 ::selection {
-  background-color: #1A56DB;
+  background-color: #7C3AED;
   color: #ffffff;
 }
 
 @layer utilities {
-  .gradient-text {
-    @apply bg-gradient-to-r from-electric via-primary-500 to-violet-500 bg-clip-text text-transparent;
-  }
-
   .glass {
     @apply bg-dark-900/5 border-dark-900/10 dark:bg-white/5 dark:border-white/10 backdrop-blur-sm border;
   }
 
   .animate-shimmer {
-    background: linear-gradient(90deg, transparent 0%, #1A56DB60 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, #7C3AED60 50%, transparent 100%);
     background-size: 200% 100%;
     animation: shimmer 2.5s linear infinite;
   }
 
   .dark .animate-shimmer {
-    background: linear-gradient(90deg, transparent 0%, #ffffff30 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, #A78BFA30 50%, transparent 100%);
     background-size: 200% 100%;
   }
 }

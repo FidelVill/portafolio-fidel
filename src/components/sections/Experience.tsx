@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Briefcase, Calendar, MapPin } from "lucide-react";
 import { experiences } from "@/data";
 import Certifications from "./Certifications";
@@ -15,43 +15,39 @@ interface ExperienceProps {
 }
 
 export default function Experience({ locale }: ExperienceProps) {
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const lineInView = useInView(timelineRef, { once: true });
+  const { ref: sectionRef, isVisible } = useScrollReveal<HTMLElement>({ threshold: 0.05 });
 
   return (
-    <section id="experience" className="py-24 px-4 max-w-6xl mx-auto">
+    <section ref={sectionRef} id="experience" className="py-24 px-4 max-w-6xl mx-auto">
       <SectionTitle
-        comment="// trayectoria"
         title={locale === "es" ? "Experiencia" : "Experience"}
       />
 
       <div className="grid lg:grid-cols-3 gap-12">
         {/* Timeline — col-span-2 */}
-        <div ref={timelineRef} className="lg:col-span-2 relative">
+        <div className="lg:col-span-2 relative">
           <motion.div
             className="absolute left-4 top-0 bottom-0 w-px bg-dark-900/10 dark:bg-white/10"
             initial={{ clipPath: "inset(0 0 100% 0 round 4px)" }}
-            animate={lineInView ? { clipPath: "inset(0 0 0% 0 round 4px)" } : undefined}
-            transition={{ duration: 1.2, ease: EASE_OUT, delay: 0.2 }}
+            animate={{ clipPath: isVisible ? "inset(0 0 0% 0 round 4px)" : "inset(0 0 100% 0 round 4px)" }}
+            transition={{ duration: 1.2, ease: EASE_OUT, delay: isVisible ? 0.2 : 0 }}
           />
 
           <div className="flex flex-col gap-8">
             {experiences.map((exp, i) => (
               <motion.div
                 key={exp.id}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: Math.min(i * 0.05, 0.2), duration: 0.45, ease: EASE_OUT }}
+                initial={{ opacity: 0, x: -32 }}
+                animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -32 }}
+                transition={{ delay: isVisible ? i * 0.1 : 0, duration: 0.45, ease: EASE_OUT }}
                 className="relative pl-12"
               >
                 {/* Timeline dot */}
                 <motion.div
                   className="absolute left-2.5 w-3 h-3 rounded-full bg-primary-500 border-2 border-light-50 dark:border-dark-900 mt-1.5"
                   initial={{ scale: 0, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ type: "spring", bounce: 0.3, delay: i * 0.1 }}
+                  animate={{ scale: isVisible ? 1 : 0, opacity: isVisible ? 1 : 0 }}
+                  transition={{ type: "spring", bounce: 0.3, delay: isVisible ? i * 0.1 + 0.2 : 0 }}
                 />
 
                 <div className="glass rounded-2xl p-6 hover:border-primary-500/20 transition-colors duration-200">
@@ -84,7 +80,7 @@ export default function Experience({ locale }: ExperienceProps) {
                     <div className="flex flex-col gap-1 text-xs text-dark-900/40 dark:text-white/40 md:text-right">
                       <div className="flex items-center gap-1 md:justify-end">
                         <Calendar size={12} aria-hidden="true" />
-                        {exp.period.start} — {exp.period.end ?? (locale === "es" ? "Actualidad" : "Present")}
+                        {exp.period.start} - {exp.period.end ?? (locale === "es" ? "Actualidad" : "Present")}
                       </div>
                       <div className="flex items-center gap-1 md:justify-end">
                         <MapPin size={12} aria-hidden="true" />

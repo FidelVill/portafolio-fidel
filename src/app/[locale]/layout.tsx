@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, Fira_Code } from "next/font/google";
+import { Geist, Geist_Mono, Fira_Code } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import ThemeProvider from "@/components/layout/ThemeProvider";
 import NeuralBackground from "@/components/ui/NeuralBackground";
+
 import "../globals.css";
 
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist",
+  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
@@ -28,7 +35,7 @@ export async function generateMetadata({
   const { locale } = await params;
 
   return {
-    title: "Fidel Villegas | Fullstack Developer",
+    title: "Fidel Villegas | Fullstack Developer · AI Integration",
     description:
       "Desarrollador Fullstack especializado en React, Angular, Laravel y Python. +11 deploys en producción.",
     keywords: ["Fullstack Developer", "React", "Angular", "Laravel", "Python"],
@@ -45,7 +52,7 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: "Fidel Villegas | Fullstack Developer",
+      title: "Fidel Villegas | Fullstack Developer · AI Integration",
       description:
         "Desarrollador Fullstack con experiencia en proyectos reales en producción.",
       type: "website",
@@ -60,7 +67,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: "Fidel Villegas | Fullstack Developer",
+      title: "Fidel Villegas | Fullstack Developer · AI Integration",
       description: "Desarrollador Fullstack con +11 deploys en producción.",
       images: ["/foto_perfil.png"],
     },
@@ -80,11 +87,11 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${firaCode.variable}`}
+      className={`${geist.variable} ${geistMono.variable} ${firaCode.variable}`}
       suppressHydrationWarning
     >
-      <body className={inter.className}>
-        <NeuralBackground />
+      <body className={geist.className}>
+        <NeuralBackground subtle />
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>{children}</ThemeProvider>
         </NextIntlClientProvider>

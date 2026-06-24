@@ -4,9 +4,10 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Send, CheckCircle } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { FaLinkedinIn } from "react-icons/fa";
+import LinkedinIcon from "@/components/ui/LinkedinIcon";
 import { social } from "@/data/social";
 import SectionTitle from "@/components/ui/SectionTitle";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
@@ -36,25 +37,26 @@ export default function Contact({ locale }: ContactProps) {
   const labelClass =
     "block text-xs text-dark-900/40 dark:text-white/40 mb-2 font-medium";
 
+  const { ref, isVisible } = useScrollReveal<HTMLElement>();
+
   return (
-    <section id="contact" className="py-24 px-4 max-w-6xl mx-auto">
+    <section ref={ref} id="contact" className="py-24 px-4 max-w-6xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 20 }}
+        transition={{ duration: 0.6, ease: EASE_OUT }}
+      >
       <SectionTitle
-        comment="// hablemos"
         title={locale === "es" ? "Contacto" : "Contact"}
       />
 
       <div className="grid md:grid-cols-2 gap-12">
         {/* Left — Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: EASE_OUT }}
-        >
+        <div>
           <p className="text-dark-900/60 dark:text-white/60 leading-relaxed mb-8">
             {locale === "es"
-              ? "¿Tienes un proyecto en mente o quieres hablar sobre oportunidades? Escríbeme, generalmente respondo en menos de 24 horas."
-              : "Have a project in mind or want to talk about opportunities? Reach out — I usually respond within 24 hours."}
+              ? "Actualmente disponible para proyectos remotos y posiciones fullstack."
+              : "Currently available for remote projects and fullstack positions."}
           </p>
 
           <ul className="flex flex-col gap-4" role="list">
@@ -95,7 +97,7 @@ export default function Contact({ locale }: ContactProps) {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 glass rounded-xl p-4 hover:border-primary-500/30 transition-colors duration-[150ms] group"
               >
-                <FaLinkedinIn size={18} aria-hidden="true" className="text-primary-500 shrink-0" />
+                <LinkedinIcon size={18} className="text-primary-500 shrink-0" />
                 <div>
                   <p className="text-xs text-dark-900/40 dark:text-white/40">LinkedIn</p>
                   <p className="text-dark-900 dark:text-white text-sm font-medium group-hover:text-primary-400 transition-colors duration-[150ms]">
@@ -113,15 +115,10 @@ export default function Contact({ locale }: ContactProps) {
               {locale === "es" ? "Disponible remoto" : "Remote available"}
             </span>
           </div>
-        </motion.div>
+        </div>
 
         {/* Right — Form / Success */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1, duration: 0.5, ease: EASE_OUT }}
-        >
+        <div>
           {sent ? (
             <motion.div
               initial={{ opacity: 0, scale: 0.97 }}
@@ -223,8 +220,9 @@ export default function Contact({ locale }: ContactProps) {
               </motion.button>
             </form>
           )}
-        </motion.div>
+        </div>
       </div>
+      </motion.div>
     </section>
   );
 }

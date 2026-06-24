@@ -1,7 +1,7 @@
 "use client";
 
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { FaLinkedin } from "react-icons/fa";
+import LinkedinIcon from "@/components/ui/LinkedinIcon";
 import { social } from "@/data/social";
 import LogoMark from "@/components/ui/LogoMark";
 
@@ -50,7 +50,7 @@ export default function Footer({ locale }: FooterProps) {
             aria-label={social.linkedin.label}
             className="text-dark-900/30 dark:text-white/30 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms]"
           >
-            <FaLinkedin size={16} aria-hidden="true" />
+            <LinkedinIcon size={16} />
           </a>
 
           <a
