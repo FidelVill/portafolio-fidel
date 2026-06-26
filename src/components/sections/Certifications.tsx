@@ -6,8 +6,7 @@ import { certifications } from "@/data";
 import GithubStats from "./GithubStats";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
+import { EASE_OUT } from "@/lib/motion";
 
 interface CertificationsProps {
   locale: string;

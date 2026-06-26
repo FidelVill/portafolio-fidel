@@ -2,8 +2,7 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-
-const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
+import { EASE_OUT } from "@/lib/motion";
 
 interface ButtonProps {
   children: React.ReactNode;

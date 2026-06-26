@@ -9,8 +9,7 @@ import SectionTitle from "@/components/ui/SectionTitle";
 import TechTag from "@/components/ui/TechTag";
 import { getTechColor } from "@/lib/utils";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
+import { EASE_OUT } from "@/lib/motion";
 
 interface ProjectsProps {
   locale: string;
@@ -51,20 +50,23 @@ export default function Projects({ locale }: ProjectsProps) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.95 }}
             transition={{ delay: isVisible ? Math.min(i * 0.08, 0.24) : 0, duration: 0.45, ease: EASE_OUT }}
-            className={`glass rounded-2xl overflow-hidden hover:border-primary-500/30 transition-colors duration-200 ${i === 0 ? "md:col-span-2" : ""
-              }`}
+            className={`glass rounded-2xl overflow-hidden hover:border-primary-500/30 transition-colors duration-200 ${
+              i === 0 || i === projects.length - 1 ? "md:col-span-2" : ""
+            }`}
           >
             {/* Top color bar */}
             {i === 0 ? (
               <div className="h-px w-full bg-accent/30" />
+            ) : i === projects.length - 1 ? (
+              <div className="h-px w-full bg-dark-900/10 dark:bg-white/10" />
             ) : (
               <div className="h-1 w-full bg-dark-900/5 dark:bg-white/5" />
             )}
 
-            <div className={`p-6 ${i === 0 ? "md:flex md:gap-8" : ""}`}>
-              {i === 0 && (
+            <div className={`p-6 ${i === 0 || i === projects.length - 1 ? "md:flex md:gap-8" : ""}`}>
+              {(i === 0 || i === projects.length - 1) && (
                 <div className="mb-4 md:mb-0 md:w-1/2">
-                  <h3 className="text-accent font-bold text-3xl mb-3">
+                  <h3 className={`font-bold mb-3 ${i === 0 ? "text-accent text-3xl" : "text-dark-900 dark:text-white text-xl"}`}>
                     {project.title}
                   </h3>
                   <p className="text-dark-900/60 dark:text-white/60 text-sm leading-relaxed">
@@ -73,8 +75,8 @@ export default function Projects({ locale }: ProjectsProps) {
                 </div>
               )}
 
-              <div className={i === 0 ? "md:w-1/2" : ""}>
-                {i !== 0 && (
+              <div className={i === 0 || i === projects.length - 1 ? "md:w-1/2" : ""}>
+                {i !== 0 && i !== projects.length - 1 && (
                   <>
                     <h3 className="text-dark-900 dark:text-white font-bold text-lg mb-2">
                       {project.title}

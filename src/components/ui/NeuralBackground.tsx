@@ -112,14 +112,37 @@ export default function NeuralBackground({ subtle = false }: { subtle?: boolean 
       }
     };
 
+    // Pause rAF loop when canvas leaves viewport; restart on re-entry
+    let running = false;
+
+    const loop = () => {
+      draw();
+      if (running) animId = requestAnimationFrame(loop);
+    };
+
+    const startLoop = () => {
+      if (!running) { running = true; animId = requestAnimationFrame(loop); }
+    };
+
+    const stopLoop = () => {
+      running = false;
+      cancelAnimationFrame(animId);
+    };
+
+    let visibilityObserver: IntersectionObserver | null = null;
+
     if (prefersReduced) {
       draw();
+    } else if (subtle) {
+      // Fixed canvas covers the full viewport — always visible, never pause
+      startLoop();
     } else {
-      const loop = () => {
-        draw();
-        animId = requestAnimationFrame(loop);
-      };
-      animId = requestAnimationFrame(loop);
+      // Hero-local canvas: pause rAF when hero scrolls out of view
+      visibilityObserver = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) startLoop(); else stopLoop(); },
+        { threshold: 0 }
+      );
+      visibilityObserver.observe(canvas);
     }
 
     const handleResize = () => {
@@ -169,7 +192,8 @@ export default function NeuralBackground({ subtle = false }: { subtle?: boolean 
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      cancelAnimationFrame(animId);
+      stopLoop();
+      visibilityObserver?.disconnect();
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);

@@ -7,6 +7,7 @@ import { SiGithub } from "@icons-pack/react-simple-icons";
 import { GitBranch } from "lucide-react";
 import { social } from "@/data/social";
 import { useCounter } from "@/hooks/useCounter";
+import { EASE_OUT } from "@/lib/motion";
 
 interface GithubStatsProps {
   locale: string;
@@ -27,8 +28,6 @@ interface CacheEntry {
 
 // Module-level cache — survives re-mounts within a session
 let cache: CacheEntry | null = null;
-
-const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
 
 const EMPTY: Stats = { repos: 0, followers: 0, publicGists: 0 };
 
@@ -63,8 +62,6 @@ export default function GithubStats({ locale }: GithubStatsProps) {
         return res.json();
       })
       .then((data) => {
-        console.log("GitHub API response:", data);
-
         const fresh: Stats = {
           repos: data.public_repos ?? 0,
           followers: data.followers ?? 0,

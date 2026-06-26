@@ -9,10 +9,17 @@ import {
   SiPostman, SiSwagger,
   SiJavascript, SiPhp, SiDart, SiDotnet, SiN8n,
   SiClaude, SiGooglegemini,
+  SiVuedotjs, SiExpress, SiMongodb,
+  SiYaak, SiHostinger, SiCpanel, SiOwasp,
 } from "@icons-pack/react-simple-icons";
-import { Bot, BarChart2, Coffee } from "lucide-react";
+import {
+  Bot, BarChart2, Coffee,
+  Mic, Radio, Shield,
+  Terminal, Globe, Gauge, Database, Lock, FileText, Layers,
+} from "lucide-react";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { EASE_OUT } from "@/lib/motion";
 
 const OpenAIIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true">
@@ -30,8 +37,6 @@ interface SkillsProps {
   locale: string;
 }
 
-const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
-
 const categories = [
   {
     key: "languages",
@@ -47,16 +52,24 @@ const categories = [
     ],
   },
   {
-    key: "frameworks",
-    label: { es: "Frameworks", en: "Frameworks" },
+    key: "frontend",
+    label: { es: "Frontend", en: "Frontend" },
     skills: [
       { name: "React.js", icon: <SiReact size={16} aria-hidden="true" /> },
       { name: "Angular", icon: <SiAngular size={16} aria-hidden="true" /> },
       { name: "Next.js", icon: <SiNextdotjs size={16} aria-hidden="true" /> },
-      { name: "Laravel", icon: <SiLaravel size={16} aria-hidden="true" /> },
+      { name: "Vue.js", icon: <SiVuedotjs size={16} aria-hidden="true" /> },
       { name: "Flutter", icon: <SiFlutter size={16} aria-hidden="true" /> },
+    ],
+  },
+  {
+    key: "backend",
+    label: { es: "Backend", en: "Backend" },
+    skills: [
+      { name: "Laravel", icon: <SiLaravel size={16} aria-hidden="true" /> },
       { name: "Flask", icon: <SiFlask size={16} aria-hidden="true" /> },
       { name: "Node.js", icon: <SiNodedotjs size={16} aria-hidden="true" /> },
+      { name: "Express", icon: <SiExpress size={16} aria-hidden="true" /> },
     ],
   },
   {
@@ -67,6 +80,7 @@ const categories = [
       { name: "Firebase", icon: <SiFirebase size={16} aria-hidden="true" /> },
       { name: "MySQL", icon: <SiMysql size={16} aria-hidden="true" /> },
       { name: "PostgreSQL", icon: <SiPostgresql size={16} aria-hidden="true" /> },
+      { name: "MongoDB", icon: <SiMongodb size={16} aria-hidden="true" /> },
       { name: "Docker", icon: <SiDocker size={16} aria-hidden="true" /> },
       { name: "Azure", icon: <AzureIcon /> },
       { name: "Vercel", icon: <SiVercel size={16} aria-hidden="true" /> },
@@ -77,10 +91,13 @@ const categories = [
     label: { es: "IA y Automatización", en: "AI & Automation" },
     skills: [
       { name: "OpenAI API", icon: <OpenAIIcon /> },
+      { name: "Gemini API", icon: <SiGooglegemini size={16} aria-hidden="true" /> },
+      { name: "Claude", icon: <SiClaude size={16} aria-hidden="true" /> },
       { name: "n8n", icon: <SiN8n size={16} aria-hidden="true" /> },
       { name: "Blip", icon: <Bot size={16} aria-hidden="true" /> },
-      { name: "Claude", icon: <SiClaude size={16} aria-hidden="true" /> },
-      { name: "Gemini API", icon: <SiGooglegemini size={16} aria-hidden="true" /> },
+      { name: "Realtime API (voz)", icon: <Mic size={16} aria-hidden="true" /> },
+      { name: "WebSockets IA", icon: <Radio size={16} aria-hidden="true" /> },
+      { name: "Prompt Security", icon: <Shield size={16} aria-hidden="true" /> },
     ],
   },
   {
@@ -90,8 +107,25 @@ const categories = [
       { name: "Git", icon: <SiGit size={16} aria-hidden="true" /> },
       { name: "Figma", icon: <SiFigma size={16} aria-hidden="true" /> },
       { name: "Postman", icon: <SiPostman size={16} aria-hidden="true" /> },
+      { name: "Yaak", icon: <SiYaak size={16} aria-hidden="true" /> },
       { name: "Power BI", icon: <BarChart2 size={16} aria-hidden="true" /> },
       { name: "Swagger", icon: <SiSwagger size={16} aria-hidden="true" /> },
+    ],
+  },
+  {
+    key: "infra-security",
+    label: { es: "Infraestructura & Seguridad", en: "Infra & Security" },
+    skills: [
+      { name: "Hostinger", icon: <SiHostinger size={16} aria-hidden="true" /> },
+      { name: "cPanel", icon: <SiCpanel size={16} aria-hidden="true" /> },
+      { name: "SSH / VPS", icon: <Terminal size={16} aria-hidden="true" /> },
+      { name: "OWASP", icon: <SiOwasp size={16} aria-hidden="true" /> },
+      { name: "CORS", icon: <Globe size={16} aria-hidden="true" /> },
+      { name: "Rate Limiting", icon: <Gauge size={16} aria-hidden="true" /> },
+      { name: "SQL Injection", icon: <Database size={16} aria-hidden="true" /> },
+      { name: "ENV Security", icon: <Lock size={16} aria-hidden="true" /> },
+      { name: "Python-DOMPDF", icon: <FileText size={16} aria-hidden="true" /> },
+      { name: "MVC + Repository", icon: <Layers size={16} aria-hidden="true" /> },
     ],
   },
 ];
@@ -102,7 +136,7 @@ export default function Skills({ locale }: SkillsProps) {
   return (
     <section ref={ref} id="skills" className="py-24 px-4 max-w-6xl mx-auto">
       <SectionTitle
-        title="Mi Stack Tecnológico"
+        title={locale === "es" ? "Mi Stack Tecnológico" : "My Tech Stack"}
         subtitle={
           locale === "es"
             ? "Tecnologías con las que construyo soluciones de extremo a extremo."
@@ -116,12 +150,13 @@ export default function Skills({ locale }: SkillsProps) {
             key={cat.key}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : 24 }}
-            transition={{ delay: isVisible ? i * 0.08 : 0, duration: 0.45, ease: EASE_OUT }}
+            transition={{ delay: isVisible ? i * 0.07 : 0, duration: 0.45, ease: EASE_OUT }}
             whileHover={{ y: -3, transition: { duration: 0.2, ease: EASE_OUT } }}
-            className="glass rounded-2xl p-6 border border-accent/20 transition-shadow duration-200 hover:shadow-lg"
+            className={`glass rounded-2xl p-6 border border-accent/20 transition-shadow duration-200 hover:shadow-lg ${
+              i === categories.length - 1 ? "md:col-span-2 lg:col-span-3" : ""
+            }`}
           >
             <div className="flex items-center gap-2 mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent" aria-hidden="true" />
               <h3 className="text-sm font-semibold text-accent font-mono">
                 {cat.label[locale as "es" | "en"]}
               </h3>

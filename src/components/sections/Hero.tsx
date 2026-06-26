@@ -3,15 +3,13 @@
 import { useEffect, useState } from "react";
 import { motion, useTransform, useSpring } from "framer-motion";
 import { useMousePosition } from "@/hooks/useMousePosition";
-import { MapPin, Download } from "lucide-react";
+import { Download } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import Image from "next/image";
 import LinkedinIcon from "@/components/ui/LinkedinIcon";
 import NeuralBackground from "@/components/ui/NeuralBackground";
 import { social } from "@/data/social";
-
-// Emil's strong ease-out — far more intentional than the built-in CSS easings
-const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
+import { EASE_OUT } from "@/lib/motion";
 
 const containerVariants = {
   hidden: {},
@@ -45,7 +43,6 @@ export default function Hero({ locale }: HeroProps) {
         "✓ Docker / Azure",
         "✓ OpenAI · Gemini · Blip",
         "Estado: Disponible para construir.",
-        "● Disponible para trabajar",
       ]
     : [
         "> Initializing profile...",
@@ -56,7 +53,6 @@ export default function Hero({ locale }: HeroProps) {
         "✓ Docker / Azure",
         "✓ OpenAI · Gemini · Blip",
         "Status: Available to build.",
-        "● Available to work",
       ];
 
   const cvFilename = locale === "es" ? "CV_Fidel_Villegas_ES_2026.pdf" : "CV_Fidel_Villegas_EN_2026.pdf";
@@ -86,7 +82,7 @@ export default function Hero({ locale }: HeroProps) {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center">
+    <section className="relative min-h-[100dvh] flex flex-col justify-center">
       <NeuralBackground />
       <div className="relative z-10 px-4 pt-20 max-w-6xl mx-auto w-full">
       <div className="grid md:grid-cols-2 gap-12 items-start">
@@ -121,26 +117,19 @@ export default function Hero({ locale }: HeroProps) {
           {/* Boot terminal */}
           <motion.div
             variants={itemVariants}
-            className="mb-4 font-mono text-sm bg-dark-900/90 dark:bg-dark-800/80 dark:border-dark-600/40 backdrop-blur-sm rounded-lg p-4 border border-dark-700/50 max-w-sm"
+            className="mb-4 font-mono text-sm bg-dark-900/90 dark:bg-dark-800/80 dark:border-dark-600/40 backdrop-blur-sm rounded-lg p-4 border border-dark-700/50 max-w-sm min-h-[220px]"
             aria-live="polite"
             aria-label="Stack tecnológico"
           >
             <div className="space-y-0.5">
-              {bootLines.map((line, i) =>
-                line?.startsWith("●") ? (
-                  <div key={i}>
-                    <span className="text-green-400">●</span>
-                    <span className="text-green-400/80">{line.slice(1)}</span>
-                  </div>
-                ) : (
-                  <div
-                    key={i}
-                    className={line?.startsWith("✓") ? "text-accent" : "text-white/70"}
-                  >
-                    {line}
-                  </div>
-                )
-              )}
+              {bootLines.map((line, i) => (
+                <div
+                  key={i}
+                  className={line?.startsWith("✓") ? "text-accent" : "text-white/70"}
+                >
+                  {line}
+                </div>
+              ))}
               <span
                 className="w-0.5 h-4 bg-accent inline-block animate-[blink_1s_step-end_infinite]"
                 aria-hidden="true"
@@ -157,15 +146,6 @@ export default function Hero({ locale }: HeroProps) {
               ? "Desarrollo aplicaciones web y móviles de alto rendimiento con integración de IA. +11 despliegues en producción."
               : "I build high-performance web and mobile apps with AI integration. 11+ production deployments."}
           </motion.p>
-
-          {/* Location */}
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center gap-1.5 text-dark-900/40 dark:text-white/40 text-sm mb-6"
-          >
-            <MapPin size={14} aria-hidden="true" />
-            <span>Morelia, Michoacán, México</span>
-          </motion.div>
 
           {/* CTAs */}
           <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mb-3">
@@ -228,7 +208,7 @@ export default function Hero({ locale }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.6, ease: EASE_OUT }}
-          className="order-1 md:order-2 flex justify-center md:justify-end mt-8"
+          className="order-1 md:order-2 flex justify-center md:justify-end mt-8 md:mt-0 md:self-center"
         >
           {/* Parallax layer — deeper depth than title */}
           <motion.div style={{ x: photoSpringX, y: photoSpringY }} className="relative max-w-[280px] w-full">

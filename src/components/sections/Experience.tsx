@@ -7,8 +7,7 @@ import { experiences } from "@/data";
 import Certifications from "./Certifications";
 import SectionTitle from "@/components/ui/SectionTitle";
 import TechTag from "@/components/ui/TechTag";
-
-const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
+import { EASE_OUT } from "@/lib/motion";
 
 interface ExperienceProps {
   locale: string;

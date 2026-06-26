@@ -9,8 +9,7 @@ import { useTheme } from "./ThemeProvider";
 import { cn } from "@/lib/utils";
 import { social } from "@/data/social";
 import LogoMark from "@/components/ui/LogoMark";
-
-const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
+import { EASE_OUT } from "@/lib/motion";
 
 const navLinks = [
   { href: "#about", label: { es: "Sobre mí", en: "About" } },
@@ -159,26 +158,30 @@ export default function Navbar({ locale }: NavbarProps) {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, maxHeight: 0 }}
+            animate={{ opacity: 1, maxHeight: 400 }}
+            exit={{ opacity: 0, maxHeight: 0 }}
             transition={{ duration: 0.2, ease: EASE_OUT }}
-            className="md:hidden bg-light-50/95 dark:bg-dark-900/95 backdrop-blur-md border-t border-dark-900/5 dark:border-white/5"
+            className="md:hidden bg-light-50/95 dark:bg-dark-900/95 backdrop-blur-md border-t border-dark-900/5 dark:border-white/5 overflow-hidden"
           >
             <ul className="flex flex-col px-4 py-4 gap-4">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
+                  <button
                     onClick={() => {
                       setActive(link.href);
                       setMenuOpen(false);
+                      // Let the menu close animation start before scrolling
+                      const id = link.href.slice(1);
+                      setTimeout(() => {
+                        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+                      }, 120);
                     }}
                     aria-current={active === link.href ? "page" : undefined}
-                    className="text-sm font-medium text-dark-900/70 dark:text-white/70 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms]"
+                    className="text-sm font-medium text-dark-900/70 dark:text-white/70 hover:text-dark-900 dark:hover:text-white transition-colors duration-[150ms] w-full text-left"
                   >
                     {link.label[locale as "es" | "en"]}
-                  </a>
+                  </button>
                 </li>
               ))}
               <li className="flex items-center gap-3 pt-2 border-t border-dark-900/10 dark:border-white/10">
@@ -196,8 +199,8 @@ export default function Navbar({ locale }: NavbarProps) {
                   {theme === "dark" ? <Sun size={16} aria-hidden="true" /> : <Moon size={16} aria-hidden="true" />}
                 </button>
                 <a
-                  href="/cv.pdf"
-                  download
+                  href={cvHref}
+                  download={cvFilename}
                   className="ml-auto px-4 py-2 text-xs font-semibold bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors duration-[150ms]"
                 >
                   CV

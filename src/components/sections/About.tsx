@@ -5,8 +5,7 @@ import { GraduationCap, MapPin, Languages, Award } from "lucide-react";
 import { SiReact, SiLaravel, SiFlutter } from "@icons-pack/react-simple-icons";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-const EASE_OUT: [number, number, number, number] = [0.23, 1, 0.32, 1];
+import { EASE_OUT } from "@/lib/motion";
 
 const OpenAISmall = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12" aria-hidden="true">
@@ -15,10 +14,10 @@ const OpenAISmall = () => (
 );
 
 const pills = [
-  { icon: <SiReact size={12} aria-hidden />,   label: "React" },
+  { icon: <SiReact size={12} aria-hidden />, label: "React" },
   { icon: <SiLaravel size={12} aria-hidden />, label: "Laravel" },
   { icon: <SiFlutter size={12} aria-hidden />, label: "Flutter" },
-  { icon: <OpenAISmall />,                     label: "OpenAI API" },
+  { icon: <OpenAISmall />, label: "OpenAI API" },
 ] as const;
 
 interface AboutProps {
@@ -60,15 +59,15 @@ export default function About({ locale }: AboutProps) {
   ];
 
   const stats = [
-    { num: "2+",  label: locale === "es" ? "Exp." : "Exp." },
+    { num: "2+", label: locale === "es" ? "Exp." : "Exp." },
     { num: "11+", label: "Deploys" },
-    { num: "5+",  label: locale === "es" ? "Proyectos" : "Projects" },
-    { num: "1",   label: locale === "es" ? "Ponencia" : "Talk" },
+    { num: "5+", label: locale === "es" ? "Proyectos" : "Projects" },
+    { num: "1", label: locale === "es" ? "Ponencia" : "Talk" },
   ];
 
   return (
     <section ref={ref} id="about" className="py-24 px-4 max-w-6xl mx-auto">
-      <div className="grid md:grid-cols-2 gap-16 items-start">
+      <div className="grid md:grid-cols-2 gap-16 items-center">
 
         {/* Left — editorial identity element */}
         <motion.div
@@ -76,41 +75,68 @@ export default function About({ locale }: AboutProps) {
           animate={{ opacity: isVisible ? 1 : 0, x: isVisible ? 0 : -40 }}
           transition={{ duration: 0.65, ease: EASE_OUT }}
         >
-          <div className="relative overflow-hidden rounded-2xl border border-dark-900/5 dark:border-white/5 bg-dark-900/[0.02] dark:bg-white/[0.02] min-h-[360px]">
+          <div className="relative overflow-hidden rounded-2xl border border-dark-900/5 dark:border-white/5 bg-dark-900/[0.02] dark:bg-white/[0.02] min-h-[420px] flex flex-col">
 
-            {/* Vertical decorative text — left edge strip */}
-            <div
-              className="absolute inset-y-0 left-0 w-12 flex items-center justify-center overflow-hidden"
-              aria-hidden="true"
-            >
-              <span
-                className="text-xl font-black tracking-[0.35em] uppercase text-dark-900/[0.06] dark:text-white/[0.06] select-none pointer-events-none whitespace-nowrap"
-                style={{ writingMode: "vertical-rl" }}
-              >
-                FIDEL VILLEGAS
-              </span>
-            </div>
+            <div className="px-8 py-8 flex flex-col justify-between flex-1">
 
-            {/* Content — clear of the text strip */}
-            <div className="pl-16 pr-8 py-8 flex flex-col justify-between gap-10 h-full min-h-[360px]">
+              {/* Top group: identity block */}
+              <div className="flex flex-col gap-5">
 
-              {/* Skill pills — terminal style */}
-              <div className="flex flex-wrap gap-2">
-                {pills.map(({ icon, label }) => (
-                  <span
-                    key={label}
-                    className="flex items-center gap-1.5 px-2.5 py-1 font-mono text-xs text-accent/70 border border-accent/30 rounded-sm bg-accent/[0.03]"
-                  >
-                    <span className="text-accent/30 select-none">[</span>
-                    <span className="text-accent/50">{icon}</span>
-                    {label}
-                    <span className="text-accent/30 select-none">]</span>
+                {/* Specialties label + tech pills */}
+                <div>
+                  <p className="font-mono text-[10px] text-accent/50 uppercase tracking-widest mb-2">
+                    {locale === "es" ? "Especialidades" : "Specialties"}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {pills.map(({ icon, label }) => (
+                      <span
+                        key={label}
+                        className="flex items-center gap-1.5 px-2.5 py-1 font-mono text-xs text-accent/70 border border-accent/30 rounded-sm bg-accent/[0.03]"
+                      >
+                        <span className="text-accent/30 select-none">[</span>
+                        <span className="text-accent/50">{icon}</span>
+                        {label}
+                        <span className="text-accent/30 select-none">]</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Currently */}
+                <div>
+                  <p className="font-mono text-[10px] text-accent/50 uppercase tracking-widest mb-1">
+                    {locale === "es" ? "Actualmente" : "Currently"}
+                  </p>
+                  <p className="text-dark-900/60 dark:text-white/60 text-sm leading-snug">
+                    {locale === "es"
+                      ? "Disponible para proyectos remotos y posiciones fullstack"
+                      : "Available for remote projects and fullstack positions"}
+                  </p>
+                </div>
+
+                <div className="border-t border-dark-900/10 dark:border-white/5" />
+
+                {/* Favorite stack */}
+                <div>
+                  <p className="font-mono text-[10px] text-accent/50 uppercase tracking-widest mb-1">
+                    {locale === "es" ? "Stack favorito" : "Favorite stack"}
+                  </p>
+                  <p className="text-accent text-sm font-mono leading-relaxed">Next.js + TS · Angular · Laravel · Python + Flask · React + TS</p>
+                </div>
+
+                <div className="border-t border-dark-900/10 dark:border-white/5" />
+
+                {/* Location */}
+                <div className="flex items-center gap-1.5 mb-6 text-dark-900/40 dark:text-white/40 text-sm">
+                  <MapPin size={14} aria-hidden="true" />
+                  <span>
+                    {locale === "es" ? "Morelia, Michoacán · Remoto disponible · Presencial" : "Morelia, Michoacán · Remote available · On site"}
                   </span>
-                ))}
+                </div>
               </div>
 
-              {/* Stat bar */}
-              <div className="grid grid-cols-4 gap-4">
+              {/* Bottom group: stat bar */}
+              <div className="grid grid-cols-4 gap-4 pt-5 border-t border-dark-900/10 dark:border-white/5">
                 {stats.map(({ num, label }) => (
                   <div key={num}>
                     <p className="text-2xl font-black text-dark-900 dark:text-white leading-none tabular-nums">
@@ -122,6 +148,7 @@ export default function About({ locale }: AboutProps) {
                   </div>
                 ))}
               </div>
+
             </div>
           </div>
         </motion.div>
