@@ -8,7 +8,10 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>(
 
   useEffect(() => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) {
+    const isMobile = window.innerWidth < 768;
+
+    // On mobile or reduced-motion: skip observer, show all content immediately
+    if (prefersReduced || isMobile) {
       setIsVisible(true);
       return;
     }

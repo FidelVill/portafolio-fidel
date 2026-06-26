@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import {
   SiReact, SiAngular, SiNextdotjs, SiTypescript,
   SiFlutter, SiLaravel, SiPython, SiNodedotjs, SiFlask,
@@ -132,6 +133,11 @@ const categories = [
 
 export default function Skills({ locale }: SkillsProps) {
   const { ref, isVisible } = useScrollReveal<HTMLElement>({ threshold: 0.05 });
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    if (isVisible && !shouldRender) setShouldRender(true);
+  }, [isVisible, shouldRender]);
 
   return (
     <section ref={ref} id="skills" className="py-24 px-4 max-w-6xl mx-auto">
@@ -144,6 +150,9 @@ export default function Skills({ locale }: SkillsProps) {
         }
       />
 
+      {!shouldRender ? (
+        <div className="min-h-[640px]" aria-hidden="true" />
+      ) : (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((cat, i) => (
           <motion.div
@@ -178,6 +187,7 @@ export default function Skills({ locale }: SkillsProps) {
           </motion.div>
         ))}
       </div>
+      )}
     </section>
   );
 }

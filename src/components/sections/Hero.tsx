@@ -67,6 +67,12 @@ export default function Hero({ locale }: HeroProps) {
   const titleSpringY = useSpring(useTransform(mouseY, v => -v * 8), springCfg);
 
   useEffect(() => {
+    // On mobile: render all lines at once, skip the typing interval
+    if (window.innerWidth < 768) {
+      setBootLines(bootSequence);
+      return;
+    }
+
     let i = 0;
     const interval = setInterval(() => {
       if (i < bootSequence.length) {
